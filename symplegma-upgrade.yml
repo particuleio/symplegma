@@ -7,6 +7,7 @@
     - bootstrap
 
 - hosts: all
+  serial: 1
   roles:
     - role: symplegma-containerd
       tags:
@@ -26,7 +27,14 @@
         - kubeadm-master
 
 - hosts: node
+  serial: 1
   roles:
     - role: symplegma-kubeadm/node
       tags:
         - kubeadm-node
+
+- hosts: master
+  roles:
+    - role: symplegma-calico
+      tags: calico
+      when: cni_plugin == "calico"
