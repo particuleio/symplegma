@@ -1,0 +1,43 @@
+site_name: Symplegma
+site_description: Website and documentation for symplegma project
+site_author: Kevin Lefevre
+site_url: https://clusterfrak-dynamics.github.io/symplegma/
+
+repo_name: clusterfrak-dynamics/symplegma
+repo_url: https://github.com/clusterfrak-dynamics/symplegma
+
+copyright: <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+
+theme:
+  name: 'material'
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  logo:
+    icon: dashboard
+  feature:
+    tabs: true
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+pages:
+  - Home: index.md
