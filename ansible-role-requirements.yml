@@ -1,0 +1,25 @@
+---
+- name: symplegma-os_bootstrap
+  scm: git
+  src: https://github.com/clusterfrak-dynamics/symplegma-os_bootstrap
+  version: master
+- name: symplegma-kubernetes_hosts
+  scm: git
+  src: https://github.com/clusterfrak-dynamics/symplegma-kubernetes_hosts
+  version: master
+- name: symplegma-containerd
+  scm: git
+  src: https://github.com/clusterfrak-dynamics/symplegma-containerd
+  version: master
+- name: symplegma-cni
+  scm: git
+  src: https://github.com/clusterfrak-dynamics/symplegma-cni
+  version: master
+- name: symplegma-kubeadm
+  scm: git
+  src: https://github.com/clusterfrak-dynamics/symplegma-kubeadm
+  version: master
+- name: symplegma-calico
+  scm: git
+  src: https://github.com/clusterfrak-dynamics/symplegma-calico
+  version: master
