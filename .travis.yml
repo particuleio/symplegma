@@ -1,5 +1,4 @@
 ---
-
 language: python
 python:
   - "3.6"
@@ -11,13 +10,11 @@ branches:
 
 install:
   - curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o semantic-release && chmod +x semantic-release
-  - pip install -U mkdocs mkdocs-material awscli pymdown-extensions
+  - pip install -U mkdocs mkdocs-material awscli pymdown-extensions pygments
   - mkdocs --version
 
 script:
-  - mkdocs build
-  - git checkout gh-pages
-  - git add site
+  - mkdocs gh-deploy
 
 after_success:
   - ./semantic-release -ghr -vf
