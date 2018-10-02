@@ -14,7 +14,7 @@ install:
   - mkdocs --version
 
 script:
-  - mkdocs gh-deploy
+  - mkdocs gh-deploy -r https://${GITHUB_TOKEN}@github.com/clusterfrak-dynamics/symplegma.git --force
 
 after_success:
   - ./semantic-release -ghr -vf
