@@ -5,6 +5,10 @@ python:
   - "3.6"
 cache: pip
 
+branches:
+  only:
+    - master
+
 install:
   - curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o semantic-release && chmod +x semantic-release
   - pip install -U mkdocs mkdocs-material awscli pymdown-extensions
