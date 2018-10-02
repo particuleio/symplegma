@@ -1,5 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
+from __future__ import print_function
 import boto3
 import os
 import argparse
@@ -13,13 +14,13 @@ class SearchEC2Tags(object):
       self.search_tags()
     if self.args.host:
       data = {}
-      print json.dumps(data, indent=2)
+      print(json.dumps(data, indent=2))
 
   def parse_args(self):
 
     ##Check if VPC_VISIBILITY is set, if not default to private
-    if "VPC_VISIBILITY" in os.environ:
-      self.vpc_visibility = os.environ['VPC_VISIBILITY']
+    if "SYMPLEGMA_VPC_VISIBILITY" in os.environ:
+      self.vpc_visibility = os.environ['SYMPLEGMA_VPC_VISIBILITY']
     else:
       self.vpc_visibility = "private"
 
@@ -36,13 +37,15 @@ class SearchEC2Tags(object):
     ##Search ec2 three times to find nodes of each group type. Relies on kubespray-role key/value.
     for group in ["master", "node", "etcd"]:
       hosts[group] = []
-      tag_key = "kubespray-role"
-      tag_value = ["*"+group+"*"]
-      region = os.environ['REGION']
+      tag_role_key = "symplegma-role"
+      tag_role_value = ["*"+group+"*"]
+      tag_env_key = "symplegma-cluster"
+      tag_env_value = [os.environ['SYMPLEGMA_CLUSTER']]
+      region = os.environ['SYMPLEGMA_AWS_REGION']
 
       ec2 = boto3.resource('ec2', region)
 
-      instances = ec2.instances.filter(Filters=[{'Name': 'tag:'+tag_key, 'Values': tag_value}, {'Name': 'instance-state-name', 'Values': ['running']}])
+      instances = ec2.instances.filter(Filters=[{'Name': 'tag:'+tag_role_key, 'Values': tag_role_value}, {'Name': 'tag:'+tag_env_key, 'Values': tag_env_value}, {'Name': 'instance-state-name', 'Values': ['running']}])
       for instance in instances:
         if self.vpc_visibility == "public":
           hosts[group].append(instance.public_dns_name)
@@ -56,6 +59,6 @@ class SearchEC2Tags(object):
           }
 
     hosts['k8s-cluster'] = {'children':['master', 'node']}
-    print json.dumps(hosts, sort_keys=True, indent=2)
+    print(json.dumps(hosts, sort_keys=True, indent=2))
 
 SearchEC2Tags()

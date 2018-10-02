@@ -1,0 +1,1 @@
+../../contrib/aws/inventory/aws.py
