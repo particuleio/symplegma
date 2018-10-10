@@ -27,7 +27,7 @@ Documentation can be found [here](https://clusterfrak-dynamics.github.io/sympleg
 ## Roadmap
 
 - [X] Provide Terraform infrastructure files for AWS
-- [ ] Provide Terraform infrastructure files for OpenStack
+- [X] Provide Terraform infrastructure files for OpenStack
 - [ ] Support OpenStack Cloud provider
 - [X] Support AWS Cloud provider
 - [ ] Support [cri-o](http://cri-o.io/) as runtime
