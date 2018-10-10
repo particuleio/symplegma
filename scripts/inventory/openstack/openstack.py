@@ -1,0 +1,1 @@
+../../../contrib/openstack/inventory/openstack.py
