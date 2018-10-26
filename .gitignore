@@ -1,4 +1,4 @@
 *.retry
 kubeconfig/*
-inventory/*
-!inventory/sample*
+site/*
+inventory/aws/
