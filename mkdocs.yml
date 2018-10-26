@@ -21,6 +21,7 @@ theme:
 markdown_extensions:
   - toc:
       permalink: true
+  - markdown_include.include
   - admonition
   - codehilite
   - footnotes
@@ -43,7 +44,10 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - Getting sarted: index.md
+  - Overview: index.md
+  - Documentation:
+    - User Guides:
+      - AWS: user-guides/aws.md
   - Roadmap:
     - Networking: roadmap/networking.md
     - CRI: roadmap/cri.md
