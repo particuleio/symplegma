@@ -54,6 +54,7 @@ resource "aws_launch_template" "master" {
 
     ebs {
       volume_size = "${var.master_asg_root_volume_size}"
+      volume_type = "gp2"
     }
   }
 }
@@ -90,6 +91,7 @@ resource "aws_launch_template" "node" {
 
     ebs {
       volume_size = "${var.node_asg_root_volume_size}"
+      volume_type = "gp2"
     }
   }
 }
