@@ -7,9 +7,9 @@ provider "aws" {
 }
 
 output "aws_region" {
-  region = "${var.aws_region}"
+  value = "${var.aws_region}"
 }
 
 output "cluster_name" {
-  cluster_name = "${var.cluster_name}"
+  value = "${var.cluster_name}"
 }
