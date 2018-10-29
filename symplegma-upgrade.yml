@@ -1,6 +1,9 @@
 ---
 - hosts: all
   gather_facts: false
+  pre_tasks:
+    - name: Wait for port 22 to be ready
+      local_action: wait_for port=22 host="{{ ansible_host }}" search_regex=OpenSSH delay=10
   roles:
     - symplegma-os_bootstrap
   tags:

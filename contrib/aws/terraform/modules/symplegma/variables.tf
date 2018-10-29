@@ -77,6 +77,7 @@ variable "node_asg_root_volume_size" {}
 variable "kubernetes_api_lb_tags" {
   type = "map"
 }
+
 variable "kubernetes_api_lb_port" {}
 
 variable "kubernetes_api_tg_port" {}
