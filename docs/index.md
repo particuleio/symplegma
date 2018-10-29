@@ -22,11 +22,10 @@ Documentation can be found [here](https://clusterfrak-dynamics.github.io/sympleg
 
 ## Roadmap
 
-- [ ] Provide Terraform infrastructure files for AWS
+- [X] Provide Terraform infrastructure files for AWS
 - [ ] Provide Terraform infrastructure files for OpenStack
 - [ ] Support OpenStack Cloud provider
-- [ ] Support AWS Cloud provider
-- [ ] Support AWS Cloud provider
+- [X] Support AWS Cloud provider
 - [ ] Support [cri-o](http://cri-o.io/) as runtime
 - [ ] Support [frakti](https://github.com/kubernetes/frakti) as runtime
 - [ ] Support [cilium](https://github.com/cilium/cilium) as network plugin
