@@ -27,3 +27,7 @@ resource "aws_lb_target_group" "kubernetes_api" {
   protocol = "TCP"
   vpc_id   = "${module.vpc.vpc_id}"
 }
+
+output "kubernetes_api_lb_dns_name" {
+  value = "${aws_lb.kubernetes_api.dns_name}"
+}
