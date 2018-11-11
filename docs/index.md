@@ -3,6 +3,10 @@
 [![Build Status](https://travis-ci.org/clusterfrak-dynamics/symplegma.svg?branch=master)](https://travis-ci.org/clusterfrak-dynamics/symplegma)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
+<p>
+<img src="https://raw.githubusercontent.com/cncf/artwork/master/kubernetes/certified-kubernetes/versionless/color/certified-kubernetes-color.png" alt="Certified Kubernetes" width="150" >
+</p>
+
 Symplegma (from greek *σύμπλεγμα*) is a simple set of [Ansible](https://www.ansible.com/) playbooks to deploy [Kubernetes](https://kubernetes.io/) with [Kubeadm](https://kubernetes.io/docs/setup/independent/high-availability/). It is heavily inspired by [Kubespray](https://github.com/kubernetes-incubator/kubespray) and [OpenStack Ansible](https://docs.openstack.org/openstack-ansible/latest/).
 
 The main goal is to minimalist with sensible defaults.
