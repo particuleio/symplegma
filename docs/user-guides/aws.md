@@ -55,7 +55,7 @@ Cluster specific variables:
 
 ## Creating the infrastructure
 
-To init a new AWS cluster, simply run `./script/init-aws.sh $CLUSTER_NAME`
+To init a new AWS cluster, simply run `./scripts/init-aws.sh $CLUSTER_NAME`
 
 It will generate `inventory/aws/$CLUSTER_NAME` with the following directory structure:
 
