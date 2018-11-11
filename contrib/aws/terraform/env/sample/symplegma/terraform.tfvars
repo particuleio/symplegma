@@ -4,7 +4,7 @@ terragrunt = {
   }
 
   terraform {
-    source = "../../../modules//symplegma"
+    source = "github.com/clusterfrak-dynamics/symplegma.git//contrib/aws/terraform/modules/symplegma"
   }
 }
 
