@@ -1,4 +1,5 @@
 *.retry
+.terragrunt-cache
 kubeconfig/*
 site/*
 inventory/aws/
