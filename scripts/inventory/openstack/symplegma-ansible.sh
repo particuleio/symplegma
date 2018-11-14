@@ -1,1 +1,0 @@
-../../../contrib/openstack/scripts/symplegma-ansible.sh
