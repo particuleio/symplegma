@@ -14,5 +14,5 @@ kubeadm_kubelet_extra_args: |
   cloud-provider: "openstack"
 
 calico_mtu: 1430
-calico_ipv4pool_ipip: "Default"
+calico_ipv4pool_ipip: "Always"
 calico_felix_ipip: "true"
