@@ -24,6 +24,11 @@ locals {
 
   master_tags = [
     {
+      key                 = "Name"
+      value               = "${var.cluster_name}-master"
+      propagate_at_launch = true
+    },
+    {
       key                 = "symplegma-role"
       value               = "master"
       propagate_at_launch = true
@@ -31,6 +36,11 @@ locals {
   ]
 
   node_tags = [
+    {
+      key                 = "Name"
+      value               = "${var.cluster_name}-node"
+      propagate_at_launch = true
+    },
     {
       key                 = "symplegma-role"
       value               = "node"
