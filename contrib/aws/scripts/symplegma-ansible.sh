@@ -9,4 +9,5 @@ ansible-playbook -i "${INVENTORY_DIR}"/aws.py symplegma-init.yml -b -v \
   -e @"${INVENTORY_DIR}"/extra_vars.yml \
   -e ansible_ssh_bastion_host="$( cd "${INVENTORY_DIR}" && terragrunt output-all -module=bastion public_ip 2>/dev/null )" \
   -e kubernetes_api_server_address="$( cd "${INVENTORY_DIR}" && terragrunt output-all kubernetes_api_lb_dns_name 2>/dev/null )" \
-  -e kubernetes_api_server_port="$( cd "${INVENTORY_DIR}" && terragrunt output-all kubernetes_api_lb_listener_port 2>/dev/null)"
+  -e kubernetes_api_server_port="$( cd "${INVENTORY_DIR}" && terragrunt output-all kubernetes_api_lb_listener_port 2>/dev/null)" \
+  ${@}
