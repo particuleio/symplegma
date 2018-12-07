@@ -1,0 +1,30 @@
+---
+- hosts: all
+  vars:
+    bin_dir: /opt/bin
+    cri_socket: /run/containerd/containerd.sock
+    cni_plugin: calico
+  pre_tasks:
+    - name: Wait for port 22 to be ready
+      local_action: wait_for port=22 host="{{ ansible_host }}" search_regex=OpenSSH delay=10
+      become: false
+  tasks:
+    - name: Reset | Run Kubeadm reset on node
+      shell: |
+        {{ bin_dir }}/kubeadm reset -f --cri-socket "{{ cri_socket }}"
+    - name: Reset | Cleanup /root
+      file:
+        path: "/root/{{ item }}"
+        state: absent
+      with_items:
+        - kubeadm-config.yaml
+        - rbac-kdd.yaml
+        - calico.yaml
+    - name: Reset | CNI config
+      file:
+        path: "/etc/cni/net.d"
+        state: absent
+    - name: Reset | CNI config
+      file:
+        path: "/etc/cni/net.d"
+        state: directory
