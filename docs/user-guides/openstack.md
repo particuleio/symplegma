@@ -153,11 +153,11 @@ export KUBECONFIG=$(pwd)/kubeconfig/${CLUSTER_NAME}/admin.conf
 kubectl get nodes
 
 NAME                                       STATUS   ROLES    AGE     VERSION
-ip-10-0-1-140.eu-west-1.compute.internal   Ready    <none>   2d22h   v1.12.1
-ip-10-0-1-22.eu-west-1.compute.internal    Ready    master   2d22h   v1.12.1
-ip-10-0-2-47.eu-west-1.compute.internal    Ready    <none>   2d22h   v1.12.1
-ip-10-0-2-8.eu-west-1.compute.internal     Ready    master   2d22h   v1.12.1
-ip-10-0-3-123.eu-west-1.compute.internal   Ready    master   2d22h   v1.12.1
+ip-10-0-1-140.eu-west-1.compute.internal   Ready    <none>   2d22h   v1.13.0
+ip-10-0-1-22.eu-west-1.compute.internal    Ready    master   2d22h   v1.13.0
+ip-10-0-2-47.eu-west-1.compute.internal    Ready    <none>   2d22h   v1.13.0
+ip-10-0-2-8.eu-west-1.compute.internal     Ready    master   2d22h   v1.13.0
+ip-10-0-3-123.eu-west-1.compute.internal   Ready    master   2d22h   v1.13.0
 ```
 
 EOD
