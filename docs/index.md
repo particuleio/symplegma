@@ -9,7 +9,7 @@
 
 Symplegma (from greek *σύμπλεγμα*) is a simple set of [Ansible](https://www.ansible.com/) playbooks to deploy [Kubernetes](https://kubernetes.io/) with [Kubeadm](https://kubernetes.io/docs/setup/independent/high-availability/). It is heavily inspired by [Kubespray](https://github.com/kubernetes-incubator/kubespray) and [OpenStack Ansible](https://docs.openstack.org/openstack-ansible/latest/).
 
-The main goal is to minimalist with sensible defaults.
+The main goal is to be minimalist with sensible defaults.
 
 ## Deploys a Kubernetes cluster
 
