@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/clusterfrak-dynamics/symplegma.svg?branch=master)](https://travis-ci.org/clusterfrak-dynamics/symplegma)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_shield)
 
 <p>
 <img src="https://raw.githubusercontent.com/cncf/artwork/master/kubernetes/certified-kubernetes/versionless/color/certified-kubernetes-color.png" alt="Certified Kubernetes" title="Certified Kubernetes" width=150/>
@@ -45,3 +46,7 @@ Each role is hosted in a separate repository :
 - [symplegma-kubernetes_hosts](https://github.com/clusterfrak-dynamics/symplegma-kubernetes_hosts)
 - [symplegma-kubeadm](https://github.com/clusterfrak-dynamics/symplegma-kubeadm)
 - [symplegma-calico](https://github.com/clusterfrak-dynamics/symplegma-calico)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_large)
