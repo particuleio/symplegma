@@ -22,4 +22,4 @@ kubeadm_kubelet_extra_args: {}
 kubeadm_api_server_cert_extra_sans: {}
 
 kubeadm_cluster_name: symplegma
-# kubeadm_etcd_image_image: "k8s.gcr.io/etcd:3.2.18"
+kubeadm_etcd_image: "k8s.gcr.io/etcd:3.2.18"
