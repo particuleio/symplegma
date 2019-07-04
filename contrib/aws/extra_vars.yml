@@ -15,4 +15,3 @@ kubeadm_kubelet_extra_args: |
 
 calico_mtu: 8981
 calico_ipv4pool_ipip: "CrossSubnet"
-calico_felix_ipip: "true"
