@@ -10,7 +10,7 @@ you are using another distribution, just make sure `python3-dev python3-pip` or
 be loaded.
 
 ```
-{!roles/symplegma-os_bootstrap/master/defaults/main.yml!}
+{!roles/symplegma-os_bootstrap/defaults/main.yml!}
 ```
 
 You can contribute to the bootstrap role
@@ -129,7 +129,7 @@ note by default `kubernetes_version` is equal to `kubeadm_version` but not the
 opposite :
 
 ```
-{!roles/symplegma-kubeadm/master/master/defaults/main.yaml!}
+{!roles/symplegma-kubeadm/master/defaults/main.yaml!}
 ```
 
 This allow to create custom deployments and custom upgrade logic (updating
