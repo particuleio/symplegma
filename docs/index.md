@@ -10,6 +10,8 @@
 
 Symplegma (from greek *σύμπλεγμα*) is a simple set of [Ansible](https://www.ansible.com/) playbooks to deploy [Kubernetes](https://kubernetes.io/) with [Kubeadm](https://kubernetes.io/docs/setup/independent/high-availability/). It is heavily inspired by [Kubespray](https://github.com/kubernetes-incubator/kubespray) and [OpenStack Ansible](https://docs.openstack.org/openstack-ansible/latest/).
 
+Symplegma is [Kubernetes certified](https://github.com/cncf/k8s-conformance/tree/master/v1.15/symplegma) since `v1.12`. Check out [CNCF Landscape](https://landscape.cncf.io/).
+
 The main goal is to be minimalist with sensible defaults.
 
 ## Deploys a Kubernetes cluster
@@ -32,9 +34,7 @@ Documentation can be found [here](https://clusterfrak-dynamics.github.io/sympleg
 - [ ] Support OpenStack Cloud provider
 - [X] Support AWS Cloud provider
 - [ ] Support [cri-o](http://cri-o.io/) as runtime
-- [ ] Support [frakti](https://github.com/kubernetes/frakti) as runtime
 - [ ] Support [cilium](https://github.com/cilium/cilium) as network plugin
-- [ ] Support [canal](https://github.com/projectcalico/canal) as network plugin
 
 ## Contributing
 

@@ -48,8 +48,4 @@ nav:
   - Documentation:
     - User Guides:
       - AWS: user-guides/aws.md
-  - Roadmap:
-    - Networking: roadmap/networking.md
-    - CRI: roadmap/cri.md
-    - etcd: roadmap/etcd.md
-    - Kubeadm: roadmap/kubeadm.md
+      - Bare-Metal: user-guides/bare-metal.md
