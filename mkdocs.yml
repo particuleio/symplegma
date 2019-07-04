@@ -47,5 +47,6 @@ nav:
   - Overview: index.md
   - Documentation:
     - User Guides:
-      - AWS: user-guides/aws.md
       - Bare-Metal: user-guides/bare-metal.md
+      - AWS: user-guides/aws.md
+      - OpenStack: user-guides/openstack.md

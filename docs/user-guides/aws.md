@@ -14,7 +14,7 @@ For now, each cluster has its own VPC, subnets, NAT etc. VPC module is included 
 
 * [Terraform](https://www.terraform.io/intro/getting-started/install.html)
 * [Terragrunt](https://github.com/gruntwork-io/terragrunt#install-terragrunt)
-* [Ansible](https://docs.ansible.com/ansible/2.7/installation_guide/intro_installation.html)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 Git clone Symplegma main repository:

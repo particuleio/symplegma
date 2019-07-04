@@ -18,7 +18,7 @@ You can contribute to the bootstrap role
 
 ## Requirements
 
-* [Ansible](https://docs.ansible.com/ansible/2.8/installation_guide/intro_installation.html)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 Git clone Symplegma main repository:

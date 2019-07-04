@@ -4,17 +4,13 @@ Symplegma supports OpenStack as a cloud provider.
 
 ## Architecture
 
-`contrib/OpenStack/` contains terraform file to deploy the following architecture. This is strongly opinionated and deploys the following architecture:
-
-![OpenStack reference architecture](../images/OpenStack-infra-transparent.png)
-
 For now, each cluster should have its own OpenStack project. Modules used are from the [Kubepsray project](https://github.com/kubernetes-incubator/kubepsray) and are included inside the symplegma module, this is subject to change in the future as PR are welcomed to make the possibilities evolved and split modules.
 
 ## Requirements
 
 * [Terraform](https://www.terraform.io/intro/getting-started/install.html)
 * [Terragrunt](https://github.com/gruntwork-io/terragrunt#install-terragrunt)
-* [Ansible](https://docs.ansible.com/ansible/2.7/installation_guide/intro_installation.html)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 Git clone Symplegma main repository:
