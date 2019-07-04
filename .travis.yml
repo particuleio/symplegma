@@ -1,7 +1,7 @@
 ---
 language: python
 python:
-  - "3.6"
+  - "3.7"
 cache: pip
 
 branches:
@@ -13,9 +13,10 @@ install:
   - curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o semantic-release && chmod +x semantic-release
   - pip install -U mkdocs mkdocs-material awscli pymdown-extensions pygments markdown_include
   - mkdocs --version
+  - ansible-galaxy install -r requirements.yml
 
 script:
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" -a "$TRAVIS_BRANCH" = "master" ]; then
       mkdocs gh-deploy -r https://${GITHUB_TOKEN}@github.com/clusterfrak-dynamics/symplegma.git --force ;
     fi
 
