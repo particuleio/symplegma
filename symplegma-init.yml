@@ -1,10 +1,6 @@
 ---
 - hosts: all
   gather_facts: false
-  pre_tasks:
-    - name: Wait for port 22 to be ready
-      wait_for_connection:
-        timeout: 300
   roles:
     - symplegma-os_bootstrap
   tags:
@@ -24,6 +20,9 @@
 
 - hosts: master
   roles:
+    - role: symplegma-etcd
+      tags:
+        - etcdctl
     - role: symplegma-kubeadm/master
       tags:
         - kubeadm-master
