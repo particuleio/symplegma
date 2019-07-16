@@ -1,0 +1,22 @@
+---
+bootstrap_python: false
+ansible_ssh_user: ubuntu
+ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+bin_dir: /usr/local/bin
+
+kubeadm_version: v1.15.0
+kubernetes_version: v1.15.0
+
+cni_plugin: "calico"
+
+kubeadm_api_server_extra_args: {}
+kubeadm_controller_manager_extra_args: {}
+kubeadm_scheduler_extra_args: {}
+kubeadm_api_server_extra_volumes: {}
+kubeadm_controller_manager_extra_volumes: {}
+kubeadm_scheduler_extra_volumes: {}
+kubeadm_kubelet_extra_args: {}
+
+kubeadm_api_server_cert_extra_sans: {}
+
+kubeadm_cluster_name: symplegma
