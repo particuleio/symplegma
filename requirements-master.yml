@@ -23,7 +23,3 @@
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-calico
   version: master
-- name: symplegma-etcd
-  scm: git
-  src: https://github.com/clusterfrak-dynamics/symplegma-etcd
-  version: master

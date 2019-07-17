@@ -20,9 +20,6 @@
 
 - hosts: master
   roles:
-    - role: symplegma-etcd
-      tags:
-        - etcdctl
     - role: symplegma-kubeadm/master
       tags:
         - kubeadm-master

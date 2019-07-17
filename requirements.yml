@@ -2,7 +2,7 @@
 - name: symplegma-os_bootstrap
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-os_bootstrap.git
-  version: v1.6.4
+  version: v1.7.0
 - name: symplegma-kubernetes_hosts
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-kubernetes_hosts
@@ -23,7 +23,3 @@
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-calico
   version: v1.7.0
-- name: symplegma-etcd
-  scm: git
-  src: https://github.com/clusterfrak-dynamics/symplegma-etcd
-  version: v1.0.0
