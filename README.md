@@ -17,7 +17,7 @@ The main goal is to be minimalist with sensible defaults.
 ## Deploys a Kubernetes cluster
 
 - Deploys vanilla Kubernetes with Kubeadm.
-- Supports [Container Linux OS](https://coreos.com/os/docs/latest/) and [Flatcar Linux](https://www.flatcar-linux.org/)
+- Supports [Container Linux OS](https://coreos.com/os/docs/latest/) / [Flatcar Linux](https://www.flatcar-linux.org/) / Ubuntu
 - Does not rely on Docker
 - Uses CRI compatible runtime (containerd by default)
 - Does not depend on cloud provider
@@ -30,7 +30,7 @@ Documentation can be found [here](https://clusterfrak-dynamics.github.io/sympleg
 ## Roadmap
 
 - [X] Provide Terraform infrastructure files for AWS
-- [ ] Provide Terraform infrastructure files for OpenStack
+- [X] Provide Terraform infrastructure files for OpenStack
 - [ ] Support OpenStack Cloud provider
 - [X] Support AWS Cloud provider
 - [ ] Support [cri-o](http://cri-o.io/) as runtime
@@ -46,7 +46,6 @@ Each role is hosted in a separate repository :
 - [symplegma-kubernetes_hosts](https://github.com/clusterfrak-dynamics/symplegma-kubernetes_hosts)
 - [symplegma-kubeadm](https://github.com/clusterfrak-dynamics/symplegma-kubeadm)
 - [symplegma-calico](https://github.com/clusterfrak-dynamics/symplegma-calico)
-
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_large)

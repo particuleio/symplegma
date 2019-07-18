@@ -1,15 +1,15 @@
 ---
-bootstrap_python: true
-ansible_ssh_user: core
-ansible_python_interpreter: /opt/bin/python
-ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+bootstrap_python: false
+ansible_ssh_user: ubuntu
+ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@{{ ansible_ssh_bastion_host }}"'
+ansible_ssh_bastion_host: __BASTION_IP__
 
 kubeadm_version: v1.15.0
 kubernetes_version: v1.15.0
 # kubernetes_api_server_address: __NLB_HOSTNAME__
 # kubernetes_api_server_port: __NLB_LISTENER_PORT__
 
-bin_dir: /opt/bin
+bin_dir: /usr/local/bin
 
 cni_plugin: "calico"
 

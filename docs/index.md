@@ -5,7 +5,7 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_shield)
 
 <p>
-<img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/kubernetes/certified-kubernetes/versionless/color/certified-kubernetes-color.png" alt="Certified Kubernetes" width="150" >
+<img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/kubernetes/certified-kubernetes/versionless/color/certified-kubernetes-color.png" alt="Certified Kubernetes" title="Certified Kubernetes" width=150/>
 </p>
 
 Symplegma (from greek *σύμπλεγμα*) is a simple set of [Ansible](https://www.ansible.com/) playbooks to deploy [Kubernetes](https://kubernetes.io/) with [Kubeadm](https://kubernetes.io/docs/setup/independent/high-availability/). It is heavily inspired by [Kubespray](https://github.com/kubernetes-incubator/kubespray) and [OpenStack Ansible](https://docs.openstack.org/openstack-ansible/latest/).
@@ -17,7 +17,7 @@ The main goal is to be minimalist with sensible defaults.
 ## Deploys a Kubernetes cluster
 
 - Deploys vanilla Kubernetes with Kubeadm.
-- Supports [Container Linux OS](https://coreos.com/os/docs/latest/) and [Flatcar Linux](https://www.flatcar-linux.org/)
+- Supports [Container Linux OS](https://coreos.com/os/docs/latest/) / [Flatcar Linux](https://www.flatcar-linux.org/) / Ubuntu
 - Does not rely on Docker
 - Uses CRI compatible runtime (containerd by default)
 - Does not depend on cloud provider
@@ -46,3 +46,6 @@ Each role is hosted in a separate repository :
 - [symplegma-kubernetes_hosts](https://github.com/clusterfrak-dynamics/symplegma-kubernetes_hosts)
 - [symplegma-kubeadm](https://github.com/clusterfrak-dynamics/symplegma-kubeadm)
 - [symplegma-calico](https://github.com/clusterfrak-dynamics/symplegma-calico)
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_large)

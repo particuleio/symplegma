@@ -1,4 +1,5 @@
 ---
+bootstrap_python: true
 ansible_ssh_user: core
 ansible_python_interpreter: /opt/bin/python
 ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@{{ ansible_ssh_bastion_host }}"'
@@ -8,6 +9,8 @@ kubeadm_version: v1.15.0
 kubernetes_version: v1.15.0
 # kubernetes_api_server_address: __NLB_HOSTNAME__
 # kubernetes_api_server_port: __NLB_LISTENER_PORT__
+
+bin_dir: /opt/bin
 
 cni_plugin: "calico"
 
@@ -22,5 +25,3 @@ kubeadm_kubelet_extra_args: {}
 kubeadm_api_server_cert_extra_sans: {}
 
 kubeadm_cluster_name: symplegma
-# kubeadm_etcd_image_repo: k8s.gcr.io/etcd
-# kubeadm_etcd_image_tag: 3.3.10

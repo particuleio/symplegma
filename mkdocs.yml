@@ -46,7 +46,14 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - Documentation:
-    - User Guides:
-      - Bare-Metal: user-guides/bare-metal.md
-      - AWS: user-guides/aws.md
-      - OpenStack: user-guides/openstack.md
+    - Kubeadm: configuration/kubeadm/kubeadm.md
+      OS:
+      - Ubuntu: configuration/os/ubuntu.md
+      - CoreOS: configuration/os/coreos.md
+      Networking:
+      - Calico: configuration/networking/calico.md
+      - HA: configuration/networking/ha.md
+  - User Guides:
+    - Bare-Metal: user-guides/bare-metal.md
+    - AWS: user-guides/aws.md
+    - OpenStack: user-guides/openstack.md
