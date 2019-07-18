@@ -46,11 +46,12 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - Documentation:
-    - Kubeadm: configuration/kubeadm/kubeadm.md
-      OS:
+    - Kubernetes:
+      - Kubeadm: configuration/kubeadm/kubeadm.md
+    - OS:
       - Ubuntu: configuration/os/ubuntu.md
       - CoreOS: configuration/os/coreos.md
-      Networking:
+    - Networking:
       - Calico: configuration/networking/calico.md
       - HA: configuration/networking/ha.md
   - User Guides:
