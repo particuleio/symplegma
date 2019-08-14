@@ -1,3 +1,4 @@
+---
 site_name: Symplegma
 site_description: Website and documentation for symplegma project
 site_author: ArchiFleKs
@@ -46,15 +47,15 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - Documentation:
-    - Kubernetes:
-      - Kubeadm: configuration/kubeadm/kubeadm.md
-    - OS:
-      - Ubuntu: configuration/os/ubuntu.md
-      - CoreOS: configuration/os/coreos.md
-    - Networking:
-      - Calico: configuration/networking/calico.md
-      - HA: configuration/networking/ha.md
+      - Kubernetes:
+          - Kubeadm: configuration/kubeadm/kubeadm.md
+      - OS:
+          - Ubuntu: configuration/os/ubuntu.md
+          - CoreOS: configuration/os/coreos.md
+      - Networking:
+          - Calico: configuration/networking/calico.md
+          - HA: configuration/networking/ha.md
   - User Guides:
-    - Bare-Metal: user-guides/bare-metal.md
-    - AWS: user-guides/aws.md
-    - OpenStack: user-guides/openstack.md
+      - Bare-Metal: user-guides/bare-metal.md
+      - AWS: user-guides/aws.md
+      - OpenStack: user-guides/openstack.md
