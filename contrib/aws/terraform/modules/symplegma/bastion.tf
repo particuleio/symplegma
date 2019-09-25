@@ -1,6 +1,6 @@
 module "bastion" {
   source = "terraform-aws-modules/ec2-instance/aws"
-
+  version                = "~> 1.0"
   name                        = "${var.bastion_name}"
   instance_count              = 1
   associate_public_ip_address = true
