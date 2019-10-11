@@ -123,7 +123,7 @@ In the cluster folder, it is possible to edit Ansible variables:
 * `group_vars/all/all.yml`: contains default Ansible variables.
 
 ```bash
-{!inventory/sample/group_vars/all/all.yml!}
+{!inventory/sample-coreos/group_vars/all/all.yml!}
 ```
 
 !!! info
