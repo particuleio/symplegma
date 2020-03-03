@@ -19,6 +19,3 @@ script:
   - if [ "$TRAVIS_PULL_REQUEST" = "false" -a "$TRAVIS_BRANCH" = "master" ]; then
       mkdocs gh-deploy -r https://${GITHUB_TOKEN}@github.com/clusterfrak-dynamics/symplegma.git --force ;
     fi
-
-after_success:
-  - ./semantic-release -ghr -vf --travis-com
