@@ -18,7 +18,7 @@
 - name: symplegma-cni
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-cni
-  version: v0.5.5
+  version: v0.8.5
 - name: symplegma-calico
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-calico
