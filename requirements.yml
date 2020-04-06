@@ -10,7 +10,7 @@
 - name: symplegma-kubeadm
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-kubeadm
-  version: v1.18.0
+  version: v1.18.0-rel.1
 - name: symplegma-containerd
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-containerd
