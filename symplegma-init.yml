@@ -1,12 +1,12 @@
 ---
-- hosts: all
+- hosts: master:node
   gather_facts: false
   roles:
     - symplegma-os_bootstrap
   tags:
     - bootstrap
 
-- hosts: all
+- hosts: master:node
   roles:
     - role: symplegma-containerd
       tags:
