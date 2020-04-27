@@ -6,7 +6,7 @@
 - name: symplegma-kubernetes_hosts
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-kubernetes_hosts
-  version: v1.18.2-rel.2
+  version: v1.18.2-rel.3
 - name: symplegma-kubeadm
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-kubeadm
