@@ -22,4 +22,4 @@
 - name: symplegma-calico
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-calico
-  version: v3.13.2-rel.1
+  version: v3.13.2-rel.2
