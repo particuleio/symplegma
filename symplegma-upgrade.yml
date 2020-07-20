@@ -38,3 +38,19 @@
     - role: symplegma-calico
       tags: calico
       when: cni_plugin == "calico"
+    - role: symplegma-flannel
+      tags: flannel
+      when: cni_plugin == "flannel"
+
+- hosts: win_node
+  serial: 1
+  roles:
+    - role: symplegma-win_docker
+      tags:
+        - win_docker
+    - role: symplegma-win_cni
+      tags:
+        - win_cni
+    - role: symplegma-win_kubernetes_hosts
+      tags:
+        - win_kubernetes_hosts
