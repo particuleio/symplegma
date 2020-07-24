@@ -22,11 +22,11 @@
 - name: symplegma-calico
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-calico
-  version: v3.13.2-rel.2
+  version: v3.15.1-rel.0
 - name: symplegma-flannel
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-flannel
-  version: v0.12.0-rel.0
+  version: v0.12.0-rel.1
 - name: symplegma-win_cni
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-win_cni
@@ -34,7 +34,7 @@
 - name: symplegma-win_kubernetes_hosts
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-win_kubernetes_hosts
-  version: v1.18.6-rel.0
+  version: v1.18.6-rel.1
 - name: symplegma-win_docker
   scm: git
   src: https://github.com/clusterfrak-dynamics/symplegma-win_docker
