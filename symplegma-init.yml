@@ -50,3 +50,6 @@
     - role: symplegma-win_kubernetes_hosts
       tags:
         - win_kubernetes_hosts
+    - role: symplegma-kubeadm/win_node
+      tags:
+        - kubeadm-win_node
