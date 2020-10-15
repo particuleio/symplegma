@@ -12,9 +12,6 @@ copyright: <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/
 theme:
   name: 'material'
   logo: "images/logo-white.svg"
-  palette:
-    primary: 'indigo'
-    accent: 'indigo'
   features:
     - tabs
     - instant
@@ -43,6 +40,9 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
+
+extra_css:
+  - stylesheets/extra.css
 
 nav:
   - Overview: index.md
