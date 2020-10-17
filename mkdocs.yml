@@ -1,11 +1,11 @@
 ---
 site_name: Symplegma
 site_description: Website and documentation for symplegma project
-site_author: ArchiFleKs
-site_url: https://clusterfrak-dynamics.github.io/symplegma/
+site_author: Particule.
+site_url: https://particuleio.github.io/symplegma/
 
-repo_name: clusterfrak-dynamics/symplegma
-repo_url: https://github.com/clusterfrak-dynamics/symplegma
+repo_name: particuleio/symplegma
+repo_url: https://github.com/particuleio/symplegma
 
 copyright: <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
 
