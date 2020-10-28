@@ -1,7 +1,7 @@
 ---
 - hosts: master:node
   vars:
-    cri_socket: /run/containerd/containerd.sock
+    cri_socket: unix:///run/containerd/containerd.sock
   tasks:
     - name: Reset | Run Kubeadm reset on node
       shell: |
@@ -26,3 +26,12 @@
       shell: |
         {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} pods -q | xargs {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} stopp
         {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} pods -q | xargs {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} rmp
+    - name: Reset | Restart services
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: "{{ item }}"
+        no_block: yes
+      loop:
+        - kubelet
+        - containerd
