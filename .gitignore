@@ -1,7 +1,6 @@
 *.retry
 .terragrunt-cache
+.terraform.d
 *.pyc
 kubeconfig/*
 site/*
-inventory/aws/
-inventory/openstack/
