@@ -2,14 +2,13 @@
 
 Symplegma supports deploying on bare metal. It is actually the main use case.
 
-`symplegma-os_bootstrap` supports bootstrapping python on CoreOS / Container
-Linux but should also work with any OS manageable by Ansible as it installs
-binaries from sources and does not depends on distribution package manager. If
-you are using another distribution, just make sure `python3-dev python3-pip` or
-`python-dev python-pip` are installed and that the following kernel modules can
-be loaded.
+`symplegma-os_bootstrap` supports bootstrapping python on Flatcar Linux but
+should also work with any OS manageable by Ansible as it installs binaries from
+sources and does not depends on distribution package manager. If you are using
+another distribution, just make sure `python3-dev python3-pip` or `python-dev
+python-pip` are installed and that the following kernel modules can be loaded.
 
-```
+```yaml
 {!roles/symplegma-os_bootstrap/defaults/main.yml!}
 ```
 
@@ -23,13 +22,13 @@ You can contribute to the bootstrap role
 
 Git clone Symplegma main repository:
 
-```bash
+```console
 git clone https://github.com/clusterfrak-dynamics/symplegma.git
 ```
 
 Fetch the roles with `ansible-galaxy`:
 
-```bash
+```console
 ansible-galaxy install -r requirements.yml
 ```
 
@@ -38,15 +37,15 @@ ansible-galaxy install -r requirements.yml
 Simply copy the sample inventory to another folder with the desired cluster
 name:
 
-```
-cp -ar inventory/sample inventory/$CLUSTER_NAME
+```console
+cp -ar inventory/ubuntu inventory/$CLUSTER_NAME
 ```
 
 Create an inventory in a [compatible
 format](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html),
 for example in `inventory/$CLUSTER_NAME/hosts` file:
 
-```
+```ini
 k8s-master-1.clusterfrak-dynamics.io
 k8s-worker-1.clusterfrak-dynamics.io
 k8s-worker-2.clusterfrak-dynamics.io
@@ -65,7 +64,7 @@ k8s-worker-4.clusterfrak-dynamics.io
 
 Your directory structure should be the following:
 
-```
+```console
 tree -I 'roles|contrib|docs|scripts|sample'
 .
 ├── README.md
@@ -96,30 +95,8 @@ tree -I 'roles|contrib|docs|scripts|sample'
 Cluster configuration is done in
 `inventory/$CLUSTER_NAME/group_vars/all/all.yml`:
 
-```
----
-ansible_ssh_user: core
-ansible_python_interpreter: /opt/bin/python
-ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-
-kubeadm_version: v1.15.0
-kubernetes_version: v1.15.0
-
-cni_plugin: "calico"
-calico_ipv4pool_ipip: "Never"
-calico_mtu: 1500
-
-kubeadm_api_server_extra_args: {}
-kubeadm_controller_manager_extra_args: {}
-kubeadm_scheduler_extra_args: {}
-kubeadm_api_server_extra_volumes: {}
-kubeadm_controller_manager_extra_volumes: {}
-kubeadm_scheduler_extra_volumes: {}
-kubeadm_kubelet_extra_args: {}
-
-kubeadm_api_server_cert_extra_sans: {}
-
-kubeadm_cluster_name: clusterfrak
+```yaml
+{!inventory/ubuntu/group_vars/all/all.yml!}
 ```
 
 Some lines have been modified compared to the original file assumes you are
@@ -128,7 +105,7 @@ running behind a bastion host. Here we connect directly to the host through SSH.
 note by default `kubernetes_version` is equal to `kubeadm_version` but not the
 opposite :
 
-```
+```yaml
 {!roles/symplegma-kubeadm/master/defaults/main.yaml!}
 ```
 
@@ -148,7 +125,7 @@ Customization is done on Calicoto improve network overall performances:
 
 Playbooks can be run from the `symplegma` directory of the repository:
 
-```
+```console
 sudo ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-init.yml -v
 ```
 
@@ -172,7 +149,7 @@ To update Kubernetes to another version, just change `kubeadm_version` and
 `kubernetes_version` in `symplegma/inventory/$CLUSTER_NAME/group_vars/all/all.yml`
 and re-run the playbooks for `kubernetes_host` and `kubeadm-master`.
 
-```
+```console
 ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-upgrade.yml -v --tags kubernetes_hosts
 ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-upgrade.yml -v --tags kubeadm-master
 ```
@@ -186,13 +163,13 @@ certificates to access the cluster as an administrator.
 By default, `kubectl` looks into `~/.kube/config`. To use the generated
 `kubeconfig` file from the `symplegma` directory:
 
-```
+```console
 export KUBECONFIG=$(pwd)/kubeconfig/$CLUSTER_NAME/admin.conf
 ```
 
 Check that you can access the cluster:
 
-```
+```console
 kubectl get nodes
 NAME               STATUS   ROLES    AGE   VERSION
 k8s-master-1   Ready    master   25h   v1.15.0
@@ -202,7 +179,7 @@ k8s-worker-3   Ready    <none>   25h   v1.15.0
 k8s-worker-4   Ready    <none>   25h   v1.15.0
 ```
 
-```
+```console
 kubectl get pods --all-namespaces
 NAMESPACE             NAME                                             READY   STATUS    RESTARTS   AGE
 kube-system           calico-kube-controllers-6fb584dd97-wfj5r         1/1     Running   1          7d20h
@@ -240,7 +217,7 @@ Install `sonobuoy`:
 1. by downloading the binary -> go to https://github.com/heptio/sonobuoy/releases
 2. alternatively, on a machine with Go installed:
 
-```
+```console
 go get -u -v github.com/heptio/sonobuoy
 ```
 
@@ -249,33 +226,32 @@ go get -u -v github.com/heptio/sonobuoy
 To run sonobuoy (the right `kubeconfig` must be set as sonobuoy talks to the
 cluster):
 
-```
+```console
 sonobuoy run
 ```
 
 The tests might take between 60 minutes and 2h. To check the status:
 
-```
+```console
 sonobuoy status
 ```
 
 To retrieve the results once it is done:
 
-```
+```console
 sonobuoy retrieve
 ```
 
 To inspect results:
 
-```
+```console
 sonobuoy e2e 201906261404_sonobuoy_4aff5e8e-21a8-448c-8960-c6565b92be91.tar.gz
 failed tests: 0
 ```
 
 Then delete cluster resources:
 
-```
+```console
 sonobuoy delete
 ```
 
-EOD

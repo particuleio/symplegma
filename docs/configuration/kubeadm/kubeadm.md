@@ -11,25 +11,32 @@ The following variable are self explanatory:
 ```
 kubeadm_api_server_extra_args: {}
 
-kubeadm_controller_manager_extra_args: {}
-
-kubeadm_scheduler_extra_args: {}
-
 kubeadm_api_server_extra_volumes: {}
 
+kubeadm_controller_manager_extra_args: {}
+
 kubeadm_controller_manager_extra_volumes: {}
+
+kubeadm_scheduler_extra_args: {}
 
 kubeadm_scheduler_extra_volumes: {}
 
 kubeadm_kubelet_extra_args: {}
+
+kubeadm_kubelet_component_config: {}
+
+kubeadm_kube_proxy_component_config: {}
 ```
 
-These variable are added to the [Kubeadm config file](https://github.com/clusterfrak-dynamics/symplegma-kubeadm/blob/master/master/templates/kubeadm-config.yaml.j2)
+These variables are added to the [Kubeadm config file](https://github.com/clusterfrak-dynamics/symplegma-kubeadm/blob/master/master/templates/kubeadm-config.yaml.j2)
 
 ## Example: customize Kubelet
 
 ```
-kubeadm_kubelet_extra_args: |
-  eviction-hard: "imagefs.available<1%,nodefs.available<1%,nodefs.inodesFree<1%"
-  fail-swap-on: "false"
+kubeadm_kubelet_component_config: |
+  evictionHard:
+    memory.available:  "200Mi"
+  failSwapOn: "false"
 ```
+
+Check out [Kubeadm documentation](https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/)
