@@ -2,7 +2,7 @@
 - name: symplegma-os_bootstrap
   scm: git
   src: https://github.com/particuleio/symplegma-os_bootstrap.git
-  version: v1.12.0
+  version: v1.13.0
 - name: symplegma-kubernetes_hosts
   scm: git
   src: https://github.com/particuleio/symplegma-kubernetes_hosts
@@ -22,7 +22,7 @@
 - name: symplegma-calico
   scm: git
   src: https://github.com/particuleio/symplegma-calico
-  version: v3.16.1-rel.1
+  version: v3.16.4-rel.0
 - name: symplegma-flannel
   scm: git
   src: https://github.com/particuleio/symplegma-flannel
