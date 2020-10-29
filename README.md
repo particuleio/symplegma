@@ -38,6 +38,9 @@ Documentation can be found [here](https://clusterfrak-dynamics.github.io/sympleg
 
 - [ ] Support [cri-o](http://cri-o.io/) as runtime
 - [ ] Support [cilium](https://github.com/cilium/cilium) as network plugin
+- [ ] Support Fedora CoreOS
+- [ ] Support Centos
+- [ ] Support bootstrapping GitOps
 
 ## Contributing
 
