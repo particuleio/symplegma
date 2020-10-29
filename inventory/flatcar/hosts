@@ -1,0 +1,8 @@
+flatcar-master
+flatcar-node
+
+[master]
+flatcar-master
+
+[node]
+flatcar-node

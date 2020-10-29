@@ -1,0 +1,8 @@
+ubuntu-master
+ubuntu-node
+
+[master]
+ubuntu-master
+
+[node]
+ubuntu-node
