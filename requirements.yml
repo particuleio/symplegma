@@ -10,7 +10,7 @@
 - name: symplegma-kubeadm
   scm: git
   src: https://github.com/particuleio/symplegma-kubeadm
-  version: v1.19.3-rel.3
+  version: v1.19.3-rel.4
 - name: symplegma-containerd
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
