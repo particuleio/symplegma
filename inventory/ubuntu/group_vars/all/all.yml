@@ -68,6 +68,9 @@ kubeadm_api_server_cert_extra_sans: {}
 
 kubeadm_cluster_name: symplegma
 
+# Do not label master nor taint (skip kubeadm phase)
+kubeadm_mark_control_plane: false
+
 # Enable systemd cgroup for Kubelet and container runtime
 # DO NOT CHANGE this on an existing cluster: Changing the cgroup driver of a
 # Node that has joined a cluster is strongly not recommended. If the kubelet
