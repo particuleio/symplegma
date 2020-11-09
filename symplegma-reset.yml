@@ -35,3 +35,13 @@
       loop:
         - kubelet
         - containerd
+    - name: Reset | Reenable SWAP in fstab (1/2)
+      replace:
+        path: /etc/fstab
+        regexp: '^# (.+?\sswap\s+sw\s+.*)$'
+        replace: '\1'
+    - name: Reset | Enable SWAP (2/2)
+      shell: |
+        swapon -a
+
+
