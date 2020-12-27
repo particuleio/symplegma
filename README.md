@@ -24,7 +24,9 @@ The main goal is to be minimalist with sensible defaults.
 - Deploys vanilla Kubernetes with Kubeadm.
 - Supports [Flatcar Linux](https://www.flatcar-linux.org/) / Ubuntu 20.04
 - Does not rely on Docker
-- Uses CRI compatible runtime (containerd by default)
+- Uses CRI compatible runtime:
+    - containerd (default)
+    - cri-o
 - Does not depend on cloud provider
 - Does not depend on primary master
 - Dynamic config
@@ -36,10 +38,8 @@ Documentation can be found [here](https://clusterfrak-dynamics.github.io/sympleg
 
 ## Roadmap
 
-- [ ] Support [cri-o](http://cri-o.io/) as runtime
 - [ ] Support [cilium](https://github.com/cilium/cilium) as network plugin
-- [ ] Support Fedora CoreOS
-- [ ] Support Centos
+- [ ] Support Kata container on QEMU and Firecracker
 - [ ] Support bootstrapping GitOps
 
 ## Contributing

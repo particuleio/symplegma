@@ -55,6 +55,9 @@ nav:
       - Networking:
           - Calico: configuration/networking/calico.md
           - HA: configuration/networking/ha.md
+      - Container Runtimes:
+          - CRI-O: configuration/container_runtimes/crio.md
+          - Containerd: configuration/container_runtimes/containerd.md
   - User Guides:
       - Bare-Metal: user-guides/bare-metal.md
       - AWS: user-guides/aws.md
