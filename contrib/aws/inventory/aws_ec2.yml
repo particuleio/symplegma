@@ -1,0 +1,13 @@
+plugin: aws_ec2
+regions:
+  - eu-west-1
+boto_profile: default
+filters:
+  tag:symplegma-role:
+    - master
+    - node
+strict_permissions: False
+strict: False
+keyed_groups:
+  - key: tags['symplegma-role']
+    separator: ''
