@@ -1,7 +1,7 @@
 ---
 - hosts: master:node
-  vars:
-    cri_socket: unix:///run/containerd/containerd.sock
+  vars_files:
+    - defaults/main.yml
   tasks:
     - name: Reset | Run Kubeadm reset on node
       shell: |
@@ -43,5 +43,3 @@
     - name: Reset | Enable SWAP (2/2)
       shell: |
         swapon -a
-
-

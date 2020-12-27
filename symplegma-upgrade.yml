@@ -8,10 +8,17 @@
 
 - hosts: master:node
   serial: 1
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-containerd
       tags:
         - containerd
+      when: container_runtime == "containerd"
+    - role: symplegma-crio
+      tags:
+        - crio
+      when: container_runtime == "crio"
     - role: symplegma-cni
       tags:
         - cni
@@ -21,6 +28,8 @@
 
 - hosts: master
   serial: 1
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-kubeadm/master
       tags:
@@ -28,12 +37,16 @@
 
 - hosts: node
   serial: 1
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-kubeadm/node
       tags:
         - kubeadm-node
 
 - hosts: master
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-calico
       tags: calico
@@ -44,6 +57,8 @@
 
 - hosts: win_node
   serial: 1
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-win_docker
       tags:

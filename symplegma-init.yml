@@ -7,10 +7,17 @@
     - bootstrap
 
 - hosts: master:node
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-containerd
       tags:
         - containerd
+      when: container_runtime == "containerd"
+    - role: symplegma-crio
+      tags:
+        - crio
+      when: container_runtime == "crio"
     - role: symplegma-cni
       tags:
         - cni
@@ -19,18 +26,24 @@
         - kubernetes_hosts
 
 - hosts: master
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-kubeadm/master
       tags:
         - kubeadm-master
 
 - hosts: node
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-kubeadm/node
       tags:
         - kubeadm-node
 
 - hosts: master
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-calico
       tags: calico
@@ -40,6 +53,8 @@
       when: cni_plugin == "flannel"
 
 - hosts: win_node
+  vars_files:
+    - defaults/main.yml
   roles:
     - role: symplegma-win_docker
       tags:
