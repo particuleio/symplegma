@@ -12,8 +12,8 @@ ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
 # ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@{{ ansible_ssh_bastion_host }}"'
 # ansible_ssh_bastion_host: __BASTION_IP__
 
-kubeadm_version: v1.19.3
-kubernetes_version: v1.19.3
+kubeadm_version: v1.20.1
+kubernetes_version: v1.20.1
 # If deploying HA clusters, specify the loadbalancer IP or domain name and port
 # in front of the control plane nodes:
 # kubernetes_api_server_address: __LB_HOSTNAME__
@@ -79,3 +79,5 @@ kubeadm_cluster_name: symplegma
 # re-create the Pod sandbox for such existing Pods. Restarting the kubelet may
 # not solve such errors. Default is to use cgroupfs.
 # systemd_cgroup: true
+
+container_runtime: containerd
