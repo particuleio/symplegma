@@ -3,7 +3,7 @@ name: 'symplegma:mkdocs'
 on:
   push:
     branches:
-    - master
+    - main
     paths:
     - 'docs/**'
     - 'mkdocs.yml'
