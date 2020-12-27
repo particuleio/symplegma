@@ -6,15 +6,19 @@
 - name: symplegma-kubernetes_hosts
   scm: git
   src: https://github.com/particuleio/symplegma-kubernetes_hosts
-  version: v1.20.0-rel.0
+  version: v1.20.0-rel.1
 - name: symplegma-kubeadm
   scm: git
   src: https://github.com/particuleio/symplegma-kubeadm
-  version: v1.20.0-rel.0
+  version: v1.20.0-rel.1
 - name: symplegma-containerd
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
   version: v1.4.3-rel.0
+- name: symplegma-crio
+  scm: git
+  src: https://github.com/particuleio/symplegma-crio
+  version: v1.20.0-rel.0
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni
