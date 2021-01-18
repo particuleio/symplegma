@@ -34,7 +34,7 @@ The main goal is to be minimalist with sensible defaults.
 
 ## Documentation
 
-Documentation can be found [here](https://clusterfrak-dynamics.github.io/symplegma/)
+Documentation can be found [here](https://particuleio.github.io/symplegma/)
 
 ## Roadmap
 
