@@ -2,40 +2,40 @@
 - name: symplegma-os_bootstrap
   scm: git
   src: https://github.com/particuleio/symplegma-os_bootstrap.git
-  version: master
+  version: main
 - name: symplegma-kubernetes_hosts
   scm: git
   src: https://github.com/particuleio/symplegma-kubernetes_hosts
-  version: master
+  version: main
 - name: symplegma-kubeadm
   scm: git
   src: https://github.com/particuleio/symplegma-kubeadm
-  version: master
+  version: main
 - name: symplegma-containerd
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
-  version: master
+  version: main
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni
-  version: master
+  version: main
 - name: symplegma-calico
   scm: git
   src: https://github.com/particuleio/symplegma-calico
-  version: master
+  version: main
 - name: symplegma-flannel
   scm: git
   src: https://github.com/particuleio/symplegma-flannel
-  version: master
+  version: main
 - name: symplegma-win_cni
   scm: git
   src: https://github.com/particuleio/symplegma-win_cni
-  version: master
+  version: main
 - name: symplegma-win_kubernetes_hosts
   scm: git
   src: https://github.com/particuleio/symplegma-win_kubernetes_hosts
-  version: master
+  version: main
 - name: symplegma-win_docker
   scm: git
   src: https://github.com/particuleio/symplegma-win_docker
-  version: master
+  version: main
