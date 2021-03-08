@@ -1,5 +1,7 @@
 cri_socket: >-
-  {%- if container_runtime == 'crio' -%}
+  {%- if container_runtime is undefined -%}
+  unix:///run/containerd/containerd.sock
+  {%- elif container_runtime == 'crio' -%}
   unix:///run/crio/crio.sock
   {%- elif container_runtime == 'containerd' -%}
   unix:///run/containerd/containerd.sock
