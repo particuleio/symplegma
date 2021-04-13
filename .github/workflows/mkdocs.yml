@@ -9,6 +9,13 @@ name: 'symplegma:mkdocs'
       - 'docs/**'
       - 'mkdocs.yml'
       - 'README.md'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'README.md'
 
 jobs:
   terraform:
@@ -30,6 +37,7 @@ jobs:
         run: ansible-galaxy install -r requirements.yml
 
       - name: deploy
+        if: github.ref == 'refs/heads/main'
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
