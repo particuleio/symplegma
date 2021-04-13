@@ -1,24 +1,36 @@
+---
 name: 'symplegma:mkdocs'
 
-on:
+'on':
   push:
     branches:
-    - main
+      - main
     paths:
-    - 'docs/**'
-    - 'mkdocs.yml'
-    - 'README.md'
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'README.md'
 
 jobs:
   terraform:
     name: 'symplegma:mkdocs'
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
 
-    - name: deploy
-      uses: mhausenblas/mkdocs-deploy-gh-pages@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REQUIREMENTS: docs/requirements.txt
+      - name: set up python3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: install ansible
+        run: pip3 install ansible
+
+      - name: install symplegma roles
+        run: ansible-galaxy install -r requirements.yml
+
+      - name: deploy
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUIREMENTS: docs/requirements.txt
