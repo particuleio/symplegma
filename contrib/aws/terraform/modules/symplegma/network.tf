@@ -1,5 +1,5 @@
 resource "aws_default_security_group" "vpc_default_sg" {
-  vpc_id = "${module.vpc.vpc_id}"
+  vpc_id = module.vpc.vpc_id
 
   ingress {
     protocol    = "-1"

@@ -1,5 +1,5 @@
 resource "aws_iam_instance_profile" "master" {
-  role = "${aws_iam_role.master.name}"
+  role = aws_iam_role.master.name
 }
 
 resource "aws_iam_role" "master" {
@@ -21,7 +21,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "master" {
-  role = "${aws_iam_role.master.id}"
+  role = aws_iam_role.master.id
 
   policy = <<EOF
 {
@@ -95,7 +95,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "node" {
-  role = "${aws_iam_role.node.name}"
+  role = aws_iam_role.node.name
 }
 
 resource "aws_iam_role" "node" {
@@ -117,7 +117,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "node" {
-  role = "${aws_iam_role.node.id}"
+  role = aws_iam_role.node.id
 
   policy = <<EOF
 {

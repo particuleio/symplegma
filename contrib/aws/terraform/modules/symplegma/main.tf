@@ -3,13 +3,13 @@ terraform {
 }
 
 provider "aws" {
-  region = "${var.aws_region}"
+  region = var.aws_region
 }
 
 output "aws_region" {
-  value = "${var.aws_region}"
+  value = var.aws_region
 }
 
 output "cluster_name" {
-  value = "${var.cluster_name}"
+  value = var.cluster_name
 }
