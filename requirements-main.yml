@@ -15,6 +15,10 @@
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
   version: main
+- name: symplegma-crio
+  scm: git
+  src: https://github.com/particuleio/symplegma-crio
+  version: main
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni
