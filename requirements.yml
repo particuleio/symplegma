@@ -10,7 +10,7 @@
 - name: symplegma-kubeadm
   scm: git
   src: https://github.com/particuleio/symplegma-kubeadm
-  version: v1.20.0-rel.1
+  version: v1.21.0-rel.0
 - name: symplegma-containerd
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
@@ -26,7 +26,7 @@
 - name: symplegma-calico
   scm: git
   src: https://github.com/particuleio/symplegma-calico
-  version: v3.17.0-rel.0
+  version: v3.18.1-rel.0
 - name: symplegma-flannel
   scm: git
   src: https://github.com/particuleio/symplegma-flannel
