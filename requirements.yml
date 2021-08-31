@@ -22,7 +22,7 @@
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni
-  version: v1.0.0-rel.0
+  version: v1.4.0
 - name: symplegma-calico
   scm: git
   src: https://github.com/particuleio/symplegma-calico
