@@ -1,7 +1,60 @@
 {
   "extends": [
-    "config:base"
+    ":separateMajorReleases",
+    ":prImmediately",
+    ":updateNotScheduled",
+    ":automergeDisabled",
+    ":disableRateLimiting",
+    ":ignoreModulesAndTests",
+    ":autodetectPinVersions",
+    ":gitSignOff",
+    "group:monorepos",
+    "group:recommended",
+    "helpers:disableTypesNodeMajor",
+    "workarounds:all",
+    ":automergeDigest",
+    ":automergePatch",
+    ":automergeMinor"
   ],
+  "baseBranches": ["main"],
+  "enabledManagers": ["ansible-galaxy", "github-actions", "pre-commit"],
+  "semanticCommits": "enabled",
+  "automergeType": "pr-comment",
+  "automergeComment": "renovate:merge",
   "versionScheme": "semver",
-  "ignoreUnstable": false
+  "ignoreUnstable": false,
+  "reviewers": [
+    "team:team"
+  ],
+  "prHourlyLimit": 0,
+  "packageRules": [
+      {
+        "matchManagers": ["github-actions"],
+        "semanticCommitScope": "ci",
+        "semanticCommitType": "chore"
+      },
+      {
+        "matchManagers": ["pre-commit"],
+        "semanticCommitScope": "ci",
+        "semanticCommitType": "chore"
+      },
+      {
+        "matchManagers": ["ansible-galaxy"],
+        "semanticCommitScope": "requirement",
+        "semanticCommitType": "fix",
+        "matchUpdateTypes": ["patch", "digest"]
+      },
+      {
+        "matchManagers": ["ansible-galaxy"],
+        "semanticCommitScope": "requirement",
+        "semanticCommitType": "feat",
+        "matchUpdateTypes": ["major", "minor"]
+      },
+      {
+        "matchManagers": ["ansible-galaxy"],
+        "semanticCommitScope": "requirement",
+        "semanticCommitType": "feat",
+        "automerge": false
+      }
+    ]
 }
