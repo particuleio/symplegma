@@ -12,8 +12,8 @@ ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
 # ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@{{ ansible_ssh_bastion_host }}"'
 # ansible_ssh_bastion_host: __BASTION_IP__
 
-kubeadm_version: v1.21.0
-kubernetes_version: v1.21.0
+kubeadm_version: v1.22.1
+kubernetes_version: v1.21.1
 # If deploying HA clusters, specify the loadbalancer IP or domain name and port
 # in front of the control plane nodes:
 # kubernetes_api_server_address: __LB_HOSTNAME__
