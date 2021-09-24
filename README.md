@@ -9,7 +9,7 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_shield)
 
 <p align="left">
-<a href="https://github.com/cncf/k8s-conformance"><img src="https://github.com/cncf/artwork/raw/master/projects/kubernetes/certified-kubernetes/1.20/color/certified-kubernetes-1.20-color.png" alt="Certified Kubernetes" title="Certified Kubernetes" width=75 style="vertical-align:middle;margin:10px 20px" /></a>
+<a href="https://github.com/cncf/k8s-conformance"><img src="https://github.com/cncf/artwork/raw/master/projects/kubernetes/certified-kubernetes/versionless/color/certified-kubernetes-color.png" alt="Certified Kubernetes" title="Certified Kubernetes" width=75 style="vertical-align:middle;margin:10px 20px" /></a>
 <a href="https://landscape.cncf.io/format=card-mode&organization=particule&selected=symplegma"><img src="https://github.com/cncf/artwork/raw/master/other/cncf-landscape/stacked/color/cncf-landscape-stacked-color.png" alt="Certified Kubernetes" title="Certified Kubernetes" width=75 style="vertical-align:middle;margin:10px 20px" /></a>
 </p>
 
