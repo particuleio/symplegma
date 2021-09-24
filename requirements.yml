@@ -18,7 +18,7 @@
 - name: symplegma-crio
   scm: git
   src: https://github.com/particuleio/symplegma-crio
-  version: v1.20.3-rel.0
+  version: v1.21.3-rel.0
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni
