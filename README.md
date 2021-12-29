@@ -36,6 +36,32 @@ The main goal is to be minimalist with sensible defaults.
 
 Documentation can be found [here](https://particuleio.github.io/symplegma/)
 
+## Roles
+
+- [symplegma-os_bootstrap][role-os_bootstrap]
+- [symplegma-kubernetes_hosts][role-kubernetes_hosts]
+- [symplegma-kubeadm][role-symplegma-kubeadm]
+- [symplegma-containerd][role-symplegma-containerd]
+- [symplegma-crio][role-symplegma-crio]
+- [symplegma-cni][role-symplegma-cni]
+- [symplegma-calico][role-symplegma-calico]
+- [symplegma-flannel][role-symplegma-flannel]
+- [symplegma-win_cni][role-symplegma-win_cni]
+- [symplegma-win_kubernetes_hosts][role-symplegma-win_kubernetes_hosts]
+- [symplegma-win_docker][role-symplegma-win_docker]
+
+[role-os_bootstrap]: https://github.com/particuleio/symplegma-os_bootstrap.git
+[role-kubernetes_hosts]: https://github.com/particuleio/symplegma-kubernetes_hosts
+[role-symplegma-kubeadm]: https://github.com/particuleio/symplegma-kubeadm
+[role-symplegma-containerd]: https://github.com/particuleio/symplegma-containerd
+[role-symplegma-crio]: https://github.com/particuleio/symplegma-crio
+[role-symplegma-cni]: https://github.com/particuleio/symplegma-cni
+[role-symplegma-calico]: https://github.com/particuleio/symplegma-calico
+[role-symplegma-flannel]: https://github.com/particuleio/symplegma-flannel
+[role-symplegma-win_cni]: https://github.com/particuleio/symplegma-win_cni
+[role-symplegma-win_kubernetes_hosts]: https://github.com/particuleio/symplegma-win_kubernetes_hosts
+[role-symplegma-win_docker]: https://github.com/particuleio/symplegma-win_docker
+
 ## Roadmap
 
 - [ ] Support [cilium](https://github.com/cilium/cilium) as network plugin
