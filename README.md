@@ -25,12 +25,16 @@ The main goal is to be minimalist with sensible defaults.
 - Supports [Flatcar Linux](https://www.flatcar-linux.org/) / Ubuntu 20.04
 - Does not rely on Docker
 - Uses CRI compatible runtime:
-    - containerd (default)
-    - cri-o
+    - [containerd][cri-containerd] (default)
+    - [cri-o][cri-crio]
 - Does not depend on cloud provider
 - Does not depend on primary master
 - Dynamic config
 - Always up to date: No deprecated options
+
+[cri-crio]: https://cri-o.io/
+[cri-containerd]: https://github.com/containerd/containerd
+[cri-docker]: https://docs.docker.com/engine/
 
 ## Documentation
 
@@ -41,10 +45,10 @@ Documentation can be found [here](https://particuleio.github.io/symplegma/)
 - [symplegma-os_bootstrap][role-os_bootstrap]: Configure the hosts OS to support Vanilla Kubernetes
 - [symplegma-kubernetes_hosts][role-kubernetes_hosts]: Bootstrap Kubernetes on Linux hosts
 - [symplegma-win_kubernetes_hosts][role-symplegma-win_kubernetes_hosts]: Bootstrap Kubernetes on Windows hosts
-- [symplegma-kubeadm][role-symplegma-kubeadm]: Bootstrap the Kubernetes Cluster using kubeadm
-- [symplegma-containerd][role-symplegma-containerd]: Install the containerd CRI
-- [symplegma-crio][role-symplegma-crio]: Install the cri-o CRI
-- [symplegma-win_docker][role-symplegma-win_docker]: Install the docker CRI on Windows hosts
+- [symplegma-kubeadm][role-symplegma-kubeadm]: Bootstrap the Kubernetes Cluster using `kubeadm`
+- [symplegma-containerd][role-symplegma-containerd]: Install the [containerd][cri-containerd] CRI
+- [symplegma-crio][role-symplegma-crio]: Install the [cri-o][cri-crio] CRI
+- [symplegma-win_docker][role-symplegma-win_docker]: Install the [docker][cri-docker] CRI on Windows hosts
 - [symplegma-cni][role-symplegma-cni]: Boostrap the hosts to install the CNI
 - [symplegma-calico][role-symplegma-calico]: Boostrap and install the Calico CNI
 - [symplegma-flannel][role-symplegma-flannel]: Bootstrap and install the Flannel CNI
