@@ -38,17 +38,17 @@ Documentation can be found [here](https://particuleio.github.io/symplegma/)
 
 ## Roles
 
-- [symplegma-os_bootstrap][role-os_bootstrap]
-- [symplegma-kubernetes_hosts][role-kubernetes_hosts]
-- [symplegma-kubeadm][role-symplegma-kubeadm]
-- [symplegma-containerd][role-symplegma-containerd]
-- [symplegma-crio][role-symplegma-crio]
-- [symplegma-cni][role-symplegma-cni]
-- [symplegma-calico][role-symplegma-calico]
-- [symplegma-flannel][role-symplegma-flannel]
-- [symplegma-win_cni][role-symplegma-win_cni]
-- [symplegma-win_kubernetes_hosts][role-symplegma-win_kubernetes_hosts]
-- [symplegma-win_docker][role-symplegma-win_docker]
+- [symplegma-os_bootstrap][role-os_bootstrap]: Configure the hosts OS to support Vanilla Kubernetes
+- [symplegma-kubernetes_hosts][role-kubernetes_hosts]: Bootstrap Kubernetes on Linux hosts
+- [symplegma-win_kubernetes_hosts][role-symplegma-win_kubernetes_hosts]: Bootstrap Kubernetes on Windows hosts
+- [symplegma-kubeadm][role-symplegma-kubeadm]: Bootstrap the Kubernetes Cluster using kubeadm
+- [symplegma-containerd][role-symplegma-containerd]: Install the containerd CRI
+- [symplegma-crio][role-symplegma-crio]: Install the cri-o CRI
+- [symplegma-win_docker][role-symplegma-win_docker]: Install the docker CRI on Windows hosts
+- [symplegma-cni][role-symplegma-cni]: Boostrap the hosts to install the CNI
+- [symplegma-calico][role-symplegma-calico]: Boostrap and install the Calico CNI
+- [symplegma-flannel][role-symplegma-flannel]: Bootstrap and install the Flannel CNI
+- [symplegma-win_cni][role-symplegma-win_cni]: Bootstrap Windows hosts to install the CNI
 
 [role-os_bootstrap]: https://github.com/particuleio/symplegma-os_bootstrap.git
 [role-kubernetes_hosts]: https://github.com/particuleio/symplegma-kubernetes_hosts
