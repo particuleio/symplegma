@@ -38,7 +38,11 @@ The main goal is to be minimalist with sensible defaults.
 
 ## Documentation
 
-Documentation can be found [here](https://particuleio.github.io/symplegma/)
+Documentation is generated using [mkdocs][mkdocs] and the sources are located in the [`./docs/`](./docs/) directory.
+
+It is available online at [particuleio.github.io/symplegma](https://particuleio.github.io/symplegma/).
+
+[mkdocs]: https://www.mkdocs.org/
 
 ## Roles
 
