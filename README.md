@@ -25,16 +25,50 @@ The main goal is to be minimalist with sensible defaults.
 - Supports [Flatcar Linux](https://www.flatcar-linux.org/) / Ubuntu 20.04
 - Does not rely on Docker
 - Uses CRI compatible runtime:
-    - containerd (default)
-    - cri-o
+    - [containerd][cri-containerd] (default)
+    - [cri-o][cri-crio]
 - Does not depend on cloud provider
 - Does not depend on primary master
 - Dynamic config
 - Always up to date: No deprecated options
 
+[cri-crio]: https://cri-o.io/
+[cri-containerd]: https://github.com/containerd/containerd
+[cri-docker]: https://docs.docker.com/engine/
+
 ## Documentation
 
-Documentation can be found [here](https://particuleio.github.io/symplegma/)
+Documentation is generated using [mkdocs][mkdocs] and the sources are located in the [`./docs/`](./docs/) directory.
+
+It is available online at [particuleio.github.io/symplegma](https://particuleio.github.io/symplegma/).
+
+[mkdocs]: https://www.mkdocs.org/
+
+## Roles
+
+- [symplegma-os_bootstrap][role-os_bootstrap]: Configure the hosts OS to support Vanilla Kubernetes
+- [symplegma-kubernetes_hosts][role-kubernetes_hosts]: Bootstrap Kubernetes on Linux hosts
+- [symplegma-win_kubernetes_hosts][role-symplegma-win_kubernetes_hosts]: Bootstrap Kubernetes on Windows hosts
+- [symplegma-kubeadm][role-symplegma-kubeadm]: Bootstrap the Kubernetes Cluster using `kubeadm`
+- [symplegma-containerd][role-symplegma-containerd]: Install the [containerd][cri-containerd] CRI
+- [symplegma-crio][role-symplegma-crio]: Install the [cri-o][cri-crio] CRI
+- [symplegma-win_docker][role-symplegma-win_docker]: Install the [docker][cri-docker] CRI on Windows hosts
+- [symplegma-cni][role-symplegma-cni]: Boostrap the hosts to install the CNI
+- [symplegma-calico][role-symplegma-calico]: Boostrap and install the Calico CNI
+- [symplegma-flannel][role-symplegma-flannel]: Bootstrap and install the Flannel CNI
+- [symplegma-win_cni][role-symplegma-win_cni]: Bootstrap Windows hosts to install the CNI
+
+[role-os_bootstrap]: https://github.com/particuleio/symplegma-os_bootstrap.git
+[role-kubernetes_hosts]: https://github.com/particuleio/symplegma-kubernetes_hosts
+[role-symplegma-kubeadm]: https://github.com/particuleio/symplegma-kubeadm
+[role-symplegma-containerd]: https://github.com/particuleio/symplegma-containerd
+[role-symplegma-crio]: https://github.com/particuleio/symplegma-crio
+[role-symplegma-cni]: https://github.com/particuleio/symplegma-cni
+[role-symplegma-calico]: https://github.com/particuleio/symplegma-calico
+[role-symplegma-flannel]: https://github.com/particuleio/symplegma-flannel
+[role-symplegma-win_cni]: https://github.com/particuleio/symplegma-win_cni
+[role-symplegma-win_kubernetes_hosts]: https://github.com/particuleio/symplegma-win_kubernetes_hosts
+[role-symplegma-win_docker]: https://github.com/particuleio/symplegma-win_docker
 
 ## Roadmap
 
