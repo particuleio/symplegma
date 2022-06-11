@@ -34,7 +34,7 @@
 - name: symplegma-win_kubernetes_hosts
   scm: git
   src: https://github.com/particuleio/symplegma-win_kubernetes_hosts
-  version: v1.18.6-rel.1
+  version: v1.24.1-rel.0
 - name: symplegma-win_docker
   scm: git
   src: https://github.com/particuleio/symplegma-win_docker
