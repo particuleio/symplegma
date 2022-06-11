@@ -23,10 +23,6 @@
   scm: git
   src: https://github.com/particuleio/symplegma-cni
   version: main
-- name: symplegma-calico
-  scm: git
-  src: https://github.com/particuleio/symplegma-calico
-  version: main
 - name: symplegma-flannel
   scm: git
   src: https://github.com/particuleio/symplegma-flannel

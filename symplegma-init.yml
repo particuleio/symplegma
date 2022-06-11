@@ -45,9 +45,6 @@
   vars_files:
     - defaults/main.yml
   roles:
-    - role: symplegma-calico
-      tags: calico
-      when: cni_plugin == "calico"
     - role: symplegma-flannel
       tags: flannel
       when: cni_plugin == "flannel"
