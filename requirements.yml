@@ -22,7 +22,7 @@
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni
-  version: v1.0.0-rel.0
+  version: v1.1.1-rel.0
 - name: symplegma-flannel
   scm: git
   src: https://github.com/particuleio/symplegma-flannel
