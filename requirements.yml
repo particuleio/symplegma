@@ -14,7 +14,7 @@
 - name: symplegma-containerd
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
-  version: v1.5.5-rel.0
+  version: v1.6.6-rel.0
 - name: symplegma-crio
   scm: git
   src: https://github.com/particuleio/symplegma-crio
