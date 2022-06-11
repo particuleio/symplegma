@@ -30,7 +30,7 @@
 - name: symplegma-win_cni
   scm: git
   src: https://github.com/particuleio/symplegma-win_cni
-  version: v0.8.6
+  version: v1.1.1
 - name: symplegma-win_kubernetes_hosts
   scm: git
   src: https://github.com/particuleio/symplegma-win_kubernetes_hosts
