@@ -14,7 +14,8 @@
     "workarounds:all",
     ":automergeDigest",
     ":automergePatch",
-    ":automergeMinor"
+    ":automergeMinor",
+    ":dependencyDashboard"
   ],
   "baseBranches": ["main"],
   "enabledManagers": ["ansible-galaxy", "github-actions", "pre-commit"],
