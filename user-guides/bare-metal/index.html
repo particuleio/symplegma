@@ -1,0 +1,1185 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website and documentation for symplegma project">
+      
+      
+        <meta name="author" content="Particule.">
+      
+      
+        <link rel="canonical" href="https://particuleio.github.io/symplegma/user-guides/bare-metal/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.6">
+    
+    
+      
+        <title>Bare-Metal - Symplegma</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9d5733d3.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploying-on-bare-metal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Symplegma" class="md-header__button md-logo" aria-label="Symplegma" data-md-component="logo">
+      
+  <img src="../../images/logo-white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Symplegma
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bare-Metal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/particuleio/symplegma/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    particuleio/symplegma
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Symplegma" class="md-nav__button md-logo" aria-label="Symplegma" data-md-component="logo">
+      
+  <img src="../../images/logo-white.svg" alt="logo">
+
+    </a>
+    Symplegma
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/particuleio/symplegma/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    particuleio/symplegma
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Documentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubernetes" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/kubeadm/kubeadm/" class="md-nav__link">
+        Kubeadm
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          OS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          OS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/os/ubuntu/" class="md-nav__link">
+        Ubuntu
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/os/flatcar/" class="md-nav__link">
+        Flatcar
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Networking
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Networking" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Networking
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/networking/ha/" class="md-nav__link">
+        HA
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Container Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Container Runtimes" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Container Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/container_runtimes/crio/" class="md-nav__link">
+        CRI-O
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/container_runtimes/containerd/" class="md-nav__link">
+        Containerd
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          User Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Bare-Metal
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Bare-Metal
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparing-inventory" class="md-nav__link">
+    Preparing inventory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-cluster" class="md-nav__link">
+    Configuring the cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-playbooks" class="md-nav__link">
+    Running the playbooks
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the playbooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-the-cluster" class="md-nav__link">
+    Upgrading the cluster
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-the-cluster" class="md-nav__link">
+    Accessing the cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conformance-end-to-end-test" class="md-nav__link">
+    Conformance end to end test
+  </a>
+  
+    <nav class="md-nav" aria-label="Conformance end to end test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-sonobuoy" class="md-nav__link">
+    Install Sonobuoy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-sonobuoy-manually" class="md-nav__link">
+    Run sonobuoy manually
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws/" class="md-nav__link">
+        AWS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openstack/" class="md-nav__link">
+        OpenStack
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparing-inventory" class="md-nav__link">
+    Preparing inventory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-cluster" class="md-nav__link">
+    Configuring the cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-playbooks" class="md-nav__link">
+    Running the playbooks
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the playbooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-the-cluster" class="md-nav__link">
+    Upgrading the cluster
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-the-cluster" class="md-nav__link">
+    Accessing the cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conformance-end-to-end-test" class="md-nav__link">
+    Conformance end to end test
+  </a>
+  
+    <nav class="md-nav" aria-label="Conformance end to end test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-sonobuoy" class="md-nav__link">
+    Install Sonobuoy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-sonobuoy-manually" class="md-nav__link">
+    Run sonobuoy manually
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/particuleio/symplegma/edit/master/docs/user-guides/bare-metal.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+
+<h1 id="deploying-on-bare-metal">Deploying on bare metal<a class="headerlink" href="#deploying-on-bare-metal" title="Permanent link">&para;</a></h1>
+<p>Symplegma supports deploying on bare metal. It is actually the main use case.</p>
+<p><code>symplegma-os_bootstrap</code> supports bootstrapping python on Flatcar Linux but
+should also work with any OS manageable by Ansible as it installs binaries from
+sources and does not depends on distribution package manager. If you are using
+another distribution, just make sure <code>python3-dev python3-pip</code> or <code>python-dev
+python-pip</code> are installed and that the following kernel modules can be loaded.</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="nt">pip_python_coreos_modules</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">httplib2</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">six</span><span class="w"></span>
+
+<span class="nt">override_system_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+
+<span class="nt">bootstrap_python</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+
+<span class="nt">kernel_modules</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">overlay</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">br_netfilter</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ip_vs</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ip_vs_rr</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ip_vs_wrr</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ip_vs_sh</span><span class="w"></span>
+
+<span class="nt">kernel_parameters</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">net.bridge.bridge-nf-call-iptables</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">net.bridge.bridge-nf-call-arptables</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">net.bridge.bridge-nf-call-ip6tables</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">net.ipv4.ip_forward</span><span class="w"></span>
+
+<span class="nt">bin_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/bin</span><span class="w"></span>
+
+<span class="nt">sysctl_file_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/sysctl.d/99-kubernetes.conf&quot;</span><span class="w"></span>
+<span class="nt">module_load_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/modules-load.d/99-kubernetes.conf&quot;</span><span class="w"></span>
+
+<span class="nt">etcd_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.5.4</span><span class="w"></span>
+<span class="nt">etcd_release_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/etcd-io/etcd/releases/download/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz</span><span class="w"></span>
+<span class="nt">etcd_release_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/etcd</span><span class="w"></span>
+
+<span class="nt">jq_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.6</span><span class="w"></span>
+<span class="nt">jq_release_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/stedolan/jq/releases/download/jq-{{ jq_version }}/jq-linux64</span><span class="w"></span>
+</code></pre></div>
+<p>You can contribute to the bootstrap role
+<a href="https://github.com/clusterfrak-dynamics/symplegma-os_bootstrap">here</a></p>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html">Ansible</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">kubectl</a></li>
+</ul>
+<p>Git clone Symplegma main repository:</p>
+<div class="highlight"><pre><span></span><code><span class="go">git clone https://github.com/clusterfrak-dynamics/symplegma.git</span>
+</code></pre></div>
+<p>Fetch the roles with <code>ansible-galaxy</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="go">ansible-galaxy install -r requirements.yml</span>
+</code></pre></div>
+<h2 id="preparing-inventory">Preparing inventory<a class="headerlink" href="#preparing-inventory" title="Permanent link">&para;</a></h2>
+<p>Simply copy the sample inventory to another folder with the desired cluster
+name:</p>
+<div class="highlight"><pre><span></span><code><span class="go">cp -ar inventory/ubuntu inventory/$CLUSTER_NAME</span>
+</code></pre></div>
+<p>Create an inventory in a <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html">compatible
+format</a>,
+for example in <code>inventory/$CLUSTER_NAME/hosts</code> file:</p>
+<div class="highlight"><pre><span></span><code><span class="na">k8s-master-1.clusterfrak-dynamics.io</span><span class="w"></span>
+<span class="na">k8s-worker-1.clusterfrak-dynamics.io</span><span class="w"></span>
+<span class="na">k8s-worker-2.clusterfrak-dynamics.io</span><span class="w"></span>
+<span class="na">k8s-worker-3.clusterfrak-dynamics.io</span><span class="w"></span>
+<span class="na">k8s-worker-4.clusterfrak-dynamics.io</span><span class="w"></span>
+
+<span class="k">[master]</span><span class="w"></span>
+<span class="na">k8s-master-1.clusterfrak-dynamics.io</span><span class="w"></span>
+
+<span class="k">[node]</span><span class="w"></span>
+<span class="na">k8s-worker-1.clusterfrak-dynamics.io</span><span class="w"></span>
+<span class="na">k8s-worker-2.clusterfrak-dynamics.io</span><span class="w"></span>
+<span class="na">k8s-worker-3.clusterfrak-dynamics.io</span><span class="w"></span>
+<span class="na">k8s-worker-4.clusterfrak-dynamics.io</span><span class="w"></span>
+</code></pre></div>
+<p>Your directory structure should be the following:</p>
+<div class="highlight"><pre><span></span><code><span class="go">tree -I &#39;roles|contrib|docs|scripts|sample&#39;</span>
+<span class="go">.</span>
+<span class="go">├── README.md</span>
+<span class="go">└── symplegma</span>
+<span class="go">    ├── CODEOWNERS</span>
+<span class="go">    ├── LICENSE</span>
+<span class="go">    ├── README.md</span>
+<span class="go">    ├── ansible.cfg</span>
+<span class="go">    ├── inventory</span>
+<span class="go">    │   └── $CLUSTER_NAME</span>
+<span class="go">    │       ├── group_vars</span>
+<span class="go">    │       │   └── all</span>
+<span class="go">    │       │       └── all.yml</span>
+<span class="go">    │       ├── host_vars</span>
+<span class="go">    │       └── hosts</span>
+<span class="go">    ├── kubeconfig</span>
+<span class="go">    │   └── $CLUSTER_NAME</span>
+<span class="go">    │       └── admin.conf</span>
+<span class="go">    ├── mkdocs.yml</span>
+<span class="go">    ├── requirements.yml</span>
+<span class="go">    ├── symplegma-init.yml</span>
+<span class="go">    ├── symplegma-reset.yml</span>
+<span class="go">    └── symplegma-upgrade.yml</span>
+</code></pre></div>
+<h2 id="configuring-the-cluster">Configuring the cluster<a class="headerlink" href="#configuring-the-cluster" title="Permanent link">&para;</a></h2>
+<p>Cluster configuration is done in
+<code>inventory/$CLUSTER_NAME/group_vars/all/all.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="nt">bootstrap_python</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="c1"># Install portable python distribution that do not provide python (eg.</span><span class="w"></span>
+<span class="c1"># coreos/flatcar):</span><span class="w"></span>
+<span class="c1"># bootstrap_python: true</span><span class="w"></span>
+<span class="c1"># ansible_python_interpreter: /opt/bin/python</span><span class="w"></span>
+
+<span class="nt">ansible_ssh_user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span><span class="w"></span>
+
+<span class="nt">ansible_ssh_common_args</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;-o</span><span class="nv"> </span><span class="s">StrictHostKeyChecking=no&#39;</span><span class="w"></span>
+<span class="c1"># To use a bastion host between node and ansible use:</span><span class="w"></span>
+<span class="c1"># ansible_ssh_common_args: &#39;-o StrictHostKeyChecking=no -o ProxyCommand=&quot;ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@{{ ansible_ssh_bastion_host }}&quot;&#39;</span><span class="w"></span>
+<span class="c1"># ansible_ssh_bastion_host: __BASTION_IP__</span><span class="w"></span>
+
+<span class="nt">kubeadm_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.24.1</span><span class="w"></span>
+<span class="nt">kubernetes_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.24.1</span><span class="w"></span>
+<span class="c1"># If deploying HA clusters, specify the loadbalancer IP or domain name and port</span><span class="w"></span>
+<span class="c1"># in front of the control plane nodes:</span><span class="w"></span>
+<span class="c1"># kubernetes_api_server_address: __LB_HOSTNAME__</span><span class="w"></span>
+<span class="c1"># kubernetes_api_server_port: __LB_LISTENER_PORT__</span><span class="w"></span>
+
+<span class="nt">bin_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/local/bin</span><span class="w"></span>
+<span class="c1"># Change default path for custom binary. On OS with immutable file system (eg.</span><span class="w"></span>
+<span class="c1"># coreos/flatcar) use a writable path</span><span class="w"></span>
+<span class="c1"># bin_dir: /opt/bin</span><span class="w"></span>
+
+<span class="c1"># Customize API server</span><span class="w"></span>
+<span class="nt">kubeadm_api_server_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_api_server_extra_volumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="c1"># Customize controller manager scheduler</span><span class="w"></span>
+<span class="c1"># eg. to publish prometheus metrics on &quot;0.0.0.0&quot;:</span><span class="w"></span>
+<span class="c1"># kubeadm_controller_manager_extra_args: |</span><span class="w"></span>
+<span class="c1">#   address: 0.0.0.0</span><span class="w"></span>
+<span class="nt">kubeadm_controller_manager_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_controller_manager_extra_volumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="c1"># Customize scheduler manager scheduler</span><span class="w"></span>
+<span class="c1"># eg. to publish prometheus metrics on &quot;0.0.0.0&quot;:</span><span class="w"></span>
+<span class="c1"># kubeadm_scheduler_extra_args: |</span><span class="w"></span>
+<span class="c1">#   address: 0.0.0.0</span><span class="w"></span>
+<span class="nt">kubeadm_scheduler_extra_volumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_scheduler_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="c1"># Customize Kubelet</span><span class="w"></span>
+<span class="c1"># `kubeadm_kubelet_extra_args` is to be used as a last resort,</span><span class="w"></span>
+<span class="c1"># `kubeadm_kubelet_component_config` configure kubelet wth native kubeadm API,</span><span class="w"></span>
+<span class="c1"># please see</span><span class="w"></span>
+<span class="c1"># https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for</span><span class="w"></span>
+<span class="c1"># more information</span><span class="w"></span>
+<span class="nt">kubeadm_kubelet_component_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_kubelet_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+
+<span class="c1"># Customize Kube Proxy configuration using native Kubeadm API</span><span class="w"></span>
+<span class="c1"># eg. to publish prometheus metrics on &quot;0.0.0.0&quot;:</span><span class="w"></span>
+<span class="c1"># kubeadm_kube_proxy_component_config: |</span><span class="w"></span>
+<span class="c1">#   metricsBindAddress: 0.0.0.0</span><span class="w"></span>
+<span class="nt">kubeadm_kube_proxy_component_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="c1"># Additionnal subject alternative names for the API server</span><span class="w"></span>
+<span class="c1"># eg. to add aditionnals domains:</span><span class="w"></span>
+<span class="c1"># kubeadm_api_server_cert_extra_sans: |</span><span class="w"></span>
+<span class="c1">#   - mydomain.example.com</span><span class="w"></span>
+<span class="nt">kubeadm_api_server_cert_extra_sans</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="nt">kubeadm_cluster_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symplegma</span><span class="w"></span>
+
+<span class="c1"># Do not label master nor taint (skip kubeadm phase)</span><span class="w"></span>
+<span class="c1"># kubeadm_mark_control_plane: false</span><span class="w"></span>
+
+<span class="c1"># Enable systemd cgroup for Kubelet and container runtime</span><span class="w"></span>
+<span class="c1"># DO NOT CHANGE this on an existing cluster: Changing the cgroup driver of a</span><span class="w"></span>
+<span class="c1"># Node that has joined a cluster is strongly not recommended. If the kubelet</span><span class="w"></span>
+<span class="c1"># has created Pods using the semantics of one cgroup driver, changing the</span><span class="w"></span>
+<span class="c1"># container runtime to another cgroup driver can cause errors when trying to</span><span class="w"></span>
+<span class="c1"># re-create the Pod sandbox for such existing Pods. Restarting the kubelet may</span><span class="w"></span>
+<span class="c1"># not solve such errors. Default is to use cgroupfs.</span><span class="w"></span>
+<span class="c1"># systemd_cgroup: true</span><span class="w"></span>
+
+<span class="nt">container_runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">containerd</span><span class="w"></span>
+</code></pre></div>
+<p>Some lines have been modified compared to the original file assumes you are
+running behind a bastion host. Here we connect directly to the host through SSH.
+<code>kubeadm</code> version and <code>kubernetes</code> version can also be customized here, please
+note by default <code>kubernetes_version</code> is equal to <code>kubeadm_version</code> but not the
+opposite :</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="nt">bin_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/bin</span><span class="w"></span>
+
+<span class="nt">cri_socket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unix:///run/containerd/containerd.sock</span><span class="w"></span>
+
+<span class="nt">kubeadm_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.24.1</span><span class="w"></span>
+
+<span class="nt">kubernetes_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">kubeadm_version</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="nt">kubernetes_api_endpoint_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6443</span><span class="w"></span>
+
+<span class="nt">kubernetes_binaries_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://storage.googleapis.com/kubernetes-release/release/{{ kubeadm_version }}/bin/linux/amd64</span><span class="w"></span>
+
+<span class="nt">kubeadm_exec_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/root</span><span class="w"></span>
+<span class="nt">kubeadm_sync_dirs</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/pki</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/pki/etcd</span><span class="w"></span>
+
+<span class="nt">kubeadm_pod_subnet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.0/16</span><span class="w"></span>
+
+<span class="nt">kubeadm_service_subnet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.96.0.0/12</span><span class="w"></span>
+<span class="nt">kubeadm_service_dns_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster.local</span><span class="w"></span>
+
+<span class="nt">kubeadm_api_server_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_api_server_extra_volumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_api_server_cert_extra_sans</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="nt">kubeadm_controller_manager_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_controller_manager_extra_volumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="nt">kubeadm_scheduler_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_scheduler_extra_volumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="nt">kubeadm_kubelet_extra_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="nt">kubeadm_kubelet_component_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="nt">kubeadm_kube_proxy_component_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+
+<span class="nt">kubeadm_cluster_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symplegma</span><span class="w"></span>
+
+<span class="nt">kubeadm_force_init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+
+<span class="nt">kubeadm_mark_control_plane</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+
+<span class="nt">systemd_cgroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+</code></pre></div>
+<p>This allow to create custom deployments and custom upgrade logic (updating
+Kubelet before control plane for example).</p>
+<h2 id="running-the-playbooks">Running the playbooks<a class="headerlink" href="#running-the-playbooks" title="Permanent link">&para;</a></h2>
+<p>Playbooks can be run from the <code>symplegma</code> directory of the repository:</p>
+<div class="highlight"><pre><span></span><code><span class="go">sudo ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-init.yml -v</span>
+</code></pre></div>
+<p>The following tags are also availabled to run specific roles:</p>
+<ul>
+<li><code>bootstrap</code>: bootstrap OS for ansible.</li>
+<li><code>containerd</code>: install Kubernetes default container runtime.</li>
+<li><code>cni</code>: install container network interface plugins.</li>
+<li><code>kubernetes_hosts</code>: install Kubernetes binaries and Kubeadm.</li>
+<li><code>kubeadm-master</code>: bootstrap Kubeadm master nodes</li>
+<li><code>kuebadm-nodes</code>: bootstrap Kubeadm worker nodes</li>
+</ul>
+<h3 id="upgrading-the-cluster">Upgrading the cluster<a class="headerlink" href="#upgrading-the-cluster" title="Permanent link">&para;</a></h3>
+<p>There is another playbook <code>symplegma-upgrade.yml</code> which does the same thing as
+<code>symplegma-init.yml</code> but with a serial set to 1. It means that nodes will be
+upgraded one by one.</p>
+<p>To update Kubernetes to another version, just change <code>kubeadm_version</code> and
+<code>kubernetes_version</code> in <code>symplegma/inventory/$CLUSTER_NAME/group_vars/all/all.yml</code>
+and re-run the playbooks for <code>kubernetes_host</code> and <code>kubeadm-master</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="go">ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-upgrade.yml -v --tags kubernetes_hosts</span>
+<span class="go">ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-upgrade.yml -v --tags kubeadm-master</span>
+</code></pre></div>
+<h2 id="accessing-the-cluster">Accessing the cluster<a class="headerlink" href="#accessing-the-cluster" title="Permanent link">&para;</a></h2>
+<p>When the playbbok are done, a <code>kubeconfig</code> file is generated in
+<code>symplegma/kubeconfig/$CLUSTER_NAME/admin.conf</code>. This file contains the TLS
+certificates to access the cluster as an administrator.</p>
+<p>By default, <code>kubectl</code> looks into <code>~/.kube/config</code>. To use the generated
+<code>kubeconfig</code> file from the <code>symplegma</code> directory:</p>
+<div class="highlight"><pre><span></span><code><span class="go">export KUBECONFIG=$(pwd)/kubeconfig/$CLUSTER_NAME/admin.conf</span>
+</code></pre></div>
+<p>Check that you can access the cluster:</p>
+<div class="highlight"><pre><span></span><code><span class="go">kubectl get nodes</span>
+<span class="go">NAME               STATUS   ROLES    AGE   VERSION</span>
+<span class="go">k8s-master-1   Ready    master   25h   v1.15.0</span>
+<span class="go">k8s-worker-1   Ready    &lt;none&gt;   25h   v1.15.0</span>
+<span class="go">k8s-worker-2   Ready    &lt;none&gt;   25h   v1.15.0</span>
+<span class="go">k8s-worker-3   Ready    &lt;none&gt;   25h   v1.15.0</span>
+<span class="go">k8s-worker-4   Ready    &lt;none&gt;   25h   v1.15.0</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">kubectl get pods --all-namespaces</span>
+<span class="go">NAMESPACE             NAME                                             READY   STATUS    RESTARTS   AGE</span>
+<span class="go">kube-system           calico-kube-controllers-6fb584dd97-wfj5r         1/1     Running   1          7d20h</span>
+<span class="go">kube-system           calico-node-554qz                                1/1     Running   1          7d20h</span>
+<span class="go">kube-system           calico-node-c28zf                                1/1     Running   1          7d20h</span>
+<span class="go">kube-system           calico-node-glqjd                                1/1     Running   1          7d20h</span>
+<span class="go">kube-system           calico-node-lm9hp                                1/1     Running   0          20h</span>
+<span class="go">kube-system           calico-node-qkw4j                                1/1     Running   1          7d20h</span>
+<span class="go">kube-system           coredns-5c98db65d4-kvsnz                         1/1     Running   2          7d20h</span>
+<span class="go">kube-system           coredns-5c98db65d4-s8zsb                         1/1     Running   2          7d20h</span>
+<span class="go">kube-system           etcd-k8s-master-1-dev                            1/1     Running   2          7d20h</span>
+<span class="go">kube-system           kube-apiserver-k8s-master-1-dev                  1/1     Running   2          7d20h</span>
+<span class="go">kube-system           kube-controller-manager-k8s-master-1-dev         1/1     Running   2          7d20h</span>
+<span class="go">kube-system           kube-proxy-dxllt                                 1/1     Running   1          7d20h</span>
+<span class="go">kube-system           kube-proxy-h97vq                                 1/1     Running   0          20h</span>
+<span class="go">kube-system           kube-proxy-kt9gc                                 1/1     Running   1          7d20h</span>
+<span class="go">kube-system           kube-proxy-ngw7p                                 1/1     Running   1          7d20h</span>
+<span class="go">kube-system           kube-proxy-rgh7t                                 1/1     Running   1          7d20h</span>
+<span class="go">kube-system           kube-scheduler-k8s-master-1-dev                  1/1     Running   2          7d20h</span>
+<span class="go">kube-system           nginx-proxy-k8s-worker-1-dev                     1/1     Running   1          7d20h</span>
+<span class="go">kube-system           nginx-proxy-k8s-worker-2-dev                     1/1     Running   1          7d20h</span>
+<span class="go">kube-system           nginx-proxy-k8s-worker-3-dev                     1/1     Running   1          7d20h</span>
+<span class="go">kube-system           nginx-proxy-k8s-worker-4-dev                     1/1     Running   1          20h</span>
+</code></pre></div>
+<h2 id="conformance-end-to-end-test">Conformance end to end test<a class="headerlink" href="#conformance-end-to-end-test" title="Permanent link">&para;</a></h2>
+<p>The cluster has passed Kubernetes conformance testing. These tests are run with
+<a href="https://github.com/heptio/sonobuoy"><code>sonobuoy</code></a>.</p>
+<h4 id="install-sonobuoy">Install Sonobuoy<a class="headerlink" href="#install-sonobuoy" title="Permanent link">&para;</a></h4>
+<p>Install <code>sonobuoy</code>:</p>
+<ol>
+<li>by downloading the binary -&gt; go to <a href="https://github.com/heptio/sonobuoy/releases">https://github.com/heptio/sonobuoy/releases</a></li>
+<li>alternatively, on a machine with Go installed:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="go">go get -u -v github.com/heptio/sonobuoy</span>
+</code></pre></div>
+<h4 id="run-sonobuoy-manually">Run sonobuoy manually<a class="headerlink" href="#run-sonobuoy-manually" title="Permanent link">&para;</a></h4>
+<p>To run sonobuoy (the right <code>kubeconfig</code> must be set as sonobuoy talks to the
+cluster):</p>
+<div class="highlight"><pre><span></span><code><span class="go">sonobuoy run</span>
+</code></pre></div>
+<p>The tests might take between 60 minutes and 2h. To check the status:</p>
+<div class="highlight"><pre><span></span><code><span class="go">sonobuoy status</span>
+</code></pre></div>
+<p>To retrieve the results once it is done:</p>
+<div class="highlight"><pre><span></span><code><span class="go">sonobuoy retrieve</span>
+</code></pre></div>
+<p>To inspect results:</p>
+<div class="highlight"><pre><span></span><code><span class="go">sonobuoy e2e 201906261404_sonobuoy_4aff5e8e-21a8-448c-8960-c6565b92be91.tar.gz</span>
+<span class="go">failed tests: 0</span>
+</code></pre></div>
+<p>Then delete cluster resources:</p>
+<div class="highlight"><pre><span></span><code><span class="go">sonobuoy delete</span>
+</code></pre></div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../configuration/container_runtimes/containerd/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Containerd" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Containerd
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../aws/" class="md-footer__link md-footer__link--next" aria-label="Next: AWS" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              AWS
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs", "instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.5e67fbfe.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e87a5f81.min.js"></script>
+      
+    
+  </body>
+</html>
