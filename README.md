@@ -19,6 +19,13 @@ Symplegma is [Kubernetes certified](https://github.com/cncf/k8s-conformance/tree
 
 The main goal is to be minimalist with sensible defaults.
 
+:warning: starting in v2, ansible role support for CNI plugin has been removed,
+as most commonly used plugin use straight foward deployment process. To migrate
+to tigera operator please see [this
+guide](https://projectcalico.docs.tigera.io/maintenance/operator-migration).
+Support to install more CNI with native installation might be added in the
+futur.
+
 ## Deploys a Kubernetes cluster
 
 - Deploys vanilla Kubernetes with Kubeadm.
@@ -34,7 +41,6 @@ The main goal is to be minimalist with sensible defaults.
 
 [cri-crio]: https://cri-o.io/
 [cri-containerd]: https://github.com/containerd/containerd
-[cri-docker]: https://docs.docker.com/engine/
 
 ## Documentation
 
@@ -54,7 +60,6 @@ It is available online at [particuleio.github.io/symplegma](https://particuleio.
 - [symplegma-crio][role-symplegma-crio]: Install the [cri-o][cri-crio] CRI
 - [symplegma-win_docker][role-symplegma-win_docker]: Install the [docker][cri-docker] CRI on Windows hosts
 - [symplegma-cni][role-symplegma-cni]: Boostrap the hosts to install the CNI
-- [symplegma-calico][role-symplegma-calico]: Boostrap and install the Calico CNI
 - [symplegma-flannel][role-symplegma-flannel]: Bootstrap and install the Flannel CNI
 - [symplegma-win_cni][role-symplegma-win_cni]: Bootstrap Windows hosts to install the CNI
 
@@ -64,7 +69,6 @@ It is available online at [particuleio.github.io/symplegma](https://particuleio.
 [role-symplegma-containerd]: https://github.com/particuleio/symplegma-containerd
 [role-symplegma-crio]: https://github.com/particuleio/symplegma-crio
 [role-symplegma-cni]: https://github.com/particuleio/symplegma-cni
-[role-symplegma-calico]: https://github.com/particuleio/symplegma-calico
 [role-symplegma-flannel]: https://github.com/particuleio/symplegma-flannel
 [role-symplegma-win_cni]: https://github.com/particuleio/symplegma-win_cni
 [role-symplegma-win_kubernetes_hosts]: https://github.com/particuleio/symplegma-win_kubernetes_hosts

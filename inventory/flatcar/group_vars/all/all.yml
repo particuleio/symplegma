@@ -24,8 +24,6 @@ bin_dir: /opt/bin
 # coreos/flatcar) use a writable path
 # bin_dir: /opt/bin
 
-cni_plugin: "calico"
-
 # Customize API server
 kubeadm_api_server_extra_args: {}
 kubeadm_api_server_extra_volumes: {}

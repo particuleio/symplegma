@@ -112,15 +112,6 @@ opposite :
 This allow to create custom deployments and custom upgrade logic (updating
 Kubelet before control plane for example).
 
-Customization is done on Calicoto improve network overall performances:
-
-* `calico_ipv4pool_ipip`: "Never" | If you are using a flat layer 2 network
-    between your instances there is no need to use IPinIP. If you have layer 3
-    Network, set this to `CrossSubnet`.
-* `calico_mtu`: 1500 | If you are using IPinIP, set this to 20 octet less (eg.
-    1480). If you are using jumbo frame. You can set this to 9000 or 8980 if you
-    have layer 3 networks and need IPinIP.
-
 ## Running the playbooks
 
 Playbooks can be run from the `symplegma` directory of the repository:
@@ -137,7 +128,6 @@ The following tags are also availabled to run specific roles:
 * `kubernetes_hosts`: install Kubernetes binaries and Kubeadm.
 * `kubeadm-master`: bootstrap Kubeadm master nodes
 * `kuebadm-nodes`: bootstrap Kubeadm worker nodes
-* `calico`: install Calico network plugin.
 
 ### Upgrading the cluster
 
