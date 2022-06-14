@@ -47,7 +47,7 @@
   roles:
     - role: symplegma-flannel
       tags: flannel
-      when: cni_plugin == "flannel"
+      when: cni_plugin is defined and cni_plugin == "flannel"
 
 - hosts: win_node
   vars_files:
