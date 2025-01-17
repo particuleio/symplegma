@@ -4,3 +4,5 @@
 *.pyc
 kubeconfig/*
 site/*
+.terraform.lock.hcl
+.terraform

@@ -1,7 +1,7 @@
-plugin: aws_ec2
+plugin: amazon.aws.aws_ec2
 regions:
   - eu-west-1
-boto_profile: default
+boto_profile: kiln-sandbox
 filters:
   tag:symplegma-role:
     - master
@@ -10,4 +10,4 @@ strict_permissions: False
 strict: False
 keyed_groups:
   - key: tags['symplegma-role']
-    separator: ''
+    separator: ""

@@ -1,17 +1,13 @@
 ---
 kubeadm_api_server_extra_args: |
-  cloud-provider: "aws"
+  cloud-provider: "external"
 
 kubeadm_controller_manager_extra_args: |-
-    cloud-provider: "aws"
-    configure-cloud-routes: "false"
+  cloud-provider: "external"
 
 kubeadm_scheduler_extra_args: {}
 kubeadm_api_server_extra_volumes: {}
 kubeadm_controller_manager_extra_volumes: {}
 kubeadm_scheduler_extra_volumes: {}
 kubeadm_kubelet_extra_args: |
-  cloud-provider: "aws"
-
-calico_mtu: 8981
-calico_ipv4pool_ipip: "CrossSubnet"
+  cloud-provider: "external"
