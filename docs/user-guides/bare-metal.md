@@ -5,8 +5,7 @@ Symplegma supports deploying on bare metal. It is actually the main use case.
 `symplegma-os_bootstrap` supports bootstrapping python on Flatcar Linux but
 should also work with any OS manageable by Ansible as it installs binaries from
 sources and does not depends on distribution package manager. If you are using
-another distribution, just make sure `python3-dev python3-pip` or `python-dev
-python-pip` are installed and that the following kernel modules can be loaded.
+another distribution, just make sure `python3 python3-venv` are installed and that the following kernel modules can be loaded.
 
 ```yaml
 {!roles/symplegma-os_bootstrap/defaults/main.yml!}
@@ -26,10 +25,11 @@ Git clone Symplegma main repository:
 git clone https://github.com/clusterfrak-dynamics/symplegma.git
 ```
 
-Fetch the roles with `ansible-galaxy`:
+Install the pinned Ansible environment and patched roles:
 
 ```console
-ansible-galaxy install -r requirements.yml
+mise install
+just setup
 ```
 
 ## Preparing inventory
@@ -117,7 +117,7 @@ Kubelet before control plane for example).
 Playbooks can be run from the `symplegma` directory of the repository:
 
 ```console
-sudo ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-init.yml -v
+uv run --locked ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-init.yml -v
 ```
 
 The following tags are also availabled to run specific roles:
@@ -135,14 +135,20 @@ There is another playbook `symplegma-upgrade.yml` which does the same thing as
 `symplegma-init.yml` but with a serial set to 1. It means that nodes will be
 upgraded one by one.
 
-To update Kubernetes to another version, just change `kubeadm_version` and
-`kubernetes_version` in `symplegma/inventory/$CLUSTER_NAME/group_vars/all/all.yml`
-and re-run the playbooks for `kubernetes_host` and `kubeadm-master`.
+Update `kubernetes_version` in your inventory, keep `kubeadm_version` equal to it,
+and run the complete upgrade playbook:
 
-```console
-ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-upgrade.yml -v --tags kubernetes_hosts
-ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-upgrade.yml -v --tags kubeadm-master
+```sh
+uv run --locked ansible-playbook -i inventory/$CLUSTER_NAME/hosts -b symplegma-upgrade.yml -v
 ```
+
+Upgrade one minor release at a time. Do not split the upgrade by role tags: the
+playbook enforces control-plane-before-kubelet ordering and drains each node.
+Pod disruption budgets and pods using local storage can prevent draining; resolve
+those conditions before retrying. Failed nodes remain cordoned for investigation.
+Legacy 1.24 clusters require a staged migration through the intervening releases,
+including the move to cgroup v2, before using the current defaults.
+
 
 ## Accessing the cluster
 
@@ -244,4 +250,3 @@ Then delete cluster resources:
 ```console
 sonobuoy delete
 ```
-

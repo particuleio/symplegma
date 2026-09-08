@@ -5,8 +5,11 @@ on Flatcar.
 
 ## Requirements
 
-Python on Flatcar is automaticaly bootstrap with a portable
-[Pypy](https://github.com/squeaky-pl/portable-pypy).
+Set `bootstrap_python: true` to install checksum-verified CPython 3.14.7 from
+[python-build-standalone](https://github.com/astral-sh/python-build-standalone).
+The bootstrap runs before fact gathering, supports amd64 and arm64, and selects
+`/opt/bin/python`. It replaces the obsolete Python 3.6 / PyPy bootstrap.
+Use a current Flatcar stable image with cgroup v2.
 
 ## Sample configuration
 

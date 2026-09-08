@@ -1,13 +1,14 @@
 ---
-- hosts: master:node
+- name: Reset Linux Kubernetes nodes
+  hosts: master:node
   vars_files:
     - defaults/main.yml
   tasks:
     - name: Reset | Run Kubeadm reset on node
-      shell: |
+      ansible.builtin.shell: |
         {{ bin_dir }}/kubeadm reset -f --cri-socket "{{ cri_socket }}"
     - name: Reset | Cleanup /root
-      file:
+      ansible.builtin.file:
         path: "/root/{{ item }}"
         state: absent
       with_items:
@@ -15,31 +16,31 @@
         - rbac-kdd.yaml
         - calico.yaml
     - name: Reset | CNI config
-      file:
+      ansible.builtin.file:
         path: "/etc/cni/net.d"
         state: absent
     - name: Reset | CNI config
-      file:
+      ansible.builtin.file:
         path: "/etc/cni/net.d"
         state: directory
     - name: Reset | Cleanup leftover pods
-      shell: |
-        {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} pods -q | xargs {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} stopp
-        {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} pods -q | xargs {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} rmp
+      ansible.builtin.shell: |
+        {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} pods -q | xargs -r {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} stopp
+        {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} pods -q | xargs -r {{ bin_dir }}/crictl --runtime-endpoint {{ cri_socket }} rmp
     - name: Reset | Restart services
-      systemd:
+      ansible.builtin.systemd:
         state: restarted
-        daemon_reload: yes
+        daemon_reload: true
         name: "{{ item }}"
-        no_block: yes
+        no_block: true
       loop:
         - kubelet
-        - containerd
+        - "{{ container_runtime | default('containerd') }}"
     - name: Reset | Reenable SWAP in fstab (1/2)
-      replace:
+      ansible.builtin.replace:
         path: /etc/fstab
         regexp: '^# (.+?\sswap\s+sw\s+.*)$'
         replace: '\1'
     - name: Reset | Enable SWAP (2/2)
-      shell: |
+      ansible.builtin.shell: |
         swapon -a

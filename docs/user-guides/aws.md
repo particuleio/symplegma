@@ -23,10 +23,11 @@ Git clone Symplegma main repository:
 git clone https://github.com/clusterfrak-dynamics/symplegma.git
 ```
 
-Fetch the roles with `ansible-galaxy`:
+Install the pinned Ansible environment and patched roles:
 
 ```bash
-ansible-galaxy install -r requirements.yml
+mise install
+just setup
 ```
 
 ## Terraform and Terragrunt
@@ -44,13 +45,13 @@ Symplegma is packaged in a [Terragrunt module](https://github.com/gruntwork-io/t
 Remote state specific variables:
 
 ```
-{!contrib/aws/terraform/env/terraform.tfvars!}
+{!contrib/aws/terraform/env/root.hcl!}
 ```
 
 Cluster specific variables:
 
 ```
-{!contrib/aws/terraform/env/sample/symplegma/terraform.tfvars!}
+{!contrib/aws/terraform/env/sample/symplegma/terragrunt.hcl!}
 ```
 
 ## Creating the infrastructure
@@ -108,7 +109,7 @@ AWS dynamic inventory allows you to target a specific set of instances depending
 To test the behavior of the dynamic inventory just run:
 
 ```bash
-./inventory/aws/${CLUSTER_NAME}/aws.py --list
+uv run --locked ansible-inventory -i inventory/aws/${CLUSTER_NAME}/aws_ec2.yml --list
 ```
 
 It should only return a specific subset of your instances.

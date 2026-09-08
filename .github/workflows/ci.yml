@@ -1,0 +1,87 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Ansible / Python ${{ matrix.python }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.12', '3.13', '3.14']
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: '0.12.10'
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Install Ansible and validation tools
+        run: uv sync --locked
+      - name: Install pinned roles
+        run: uv run --locked python scripts/install-roles.py
+      - name: Check role installation is repeatable
+        run: uv run --locked python scripts/install-roles.py
+      - name: Lint playbooks and imported roles
+        run: uv run --locked ansible-lint --offline symplegma-init.yml symplegma-upgrade.yml symplegma-reset.yml
+      - name: Check both sample inventories and all playbooks
+        run: |
+          for inventory in ubuntu flatcar; do
+            for playbook in symplegma-init.yml symplegma-upgrade.yml symplegma-reset.yml; do
+              uv run --locked ansible-playbook -i "inventory/$inventory/hosts" "$playbook" --syntax-check
+            done
+          done
+      - name: Validate rendered Kubernetes and runtime configurations
+        run: uv run --locked python -m unittest discover -s tests -v
+      - name: Validate configuration with the released kubeadm binary
+        if: matrix.python == '3.14'
+        run: uv run --locked python -m tests.validate_kubeadm v1.33.13 v1.34.11 v1.35.8 v1.36.4 v1.37.0
+      - name: Check shell syntax
+        run: |
+          for script in scripts/*.sh contrib/aws/scripts/*.sh roles/symplegma-os_bootstrap/files/bootstrap.sh; do
+            bash -n "$script"
+          done
+      - name: Check whitespace
+        run: git diff --check
+
+  pre-commit:
+    name: Pre-commit checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: '0.12.10'
+          python-version: '3.14'
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Install dependencies and roles
+        run: |
+          uv sync --locked
+          uv run --locked python scripts/install-roles.py
+      - name: Run all pre-commit hooks
+        run: uv run --locked pre-commit run --all-files --show-diff-on-failure

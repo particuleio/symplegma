@@ -1,13 +1,12 @@
 ---
-kubeadm_api_server_extra_args: |
-  cloud-provider: "external"
-
-kubeadm_controller_manager_extra_args: |-
-  cloud-provider: "external"
-
-kubeadm_scheduler_extra_args: {}
-kubeadm_api_server_extra_volumes: {}
-kubeadm_controller_manager_extra_volumes: {}
-kubeadm_scheduler_extra_volumes: {}
-kubeadm_kubelet_extra_args: |
-  cloud-provider: "external"
+# In-tree cloud provider flags have been removed from the API server and
+# controller manager. Deploy the external AWS cloud controller separately.
+kubeadm_api_server_extra_args: []
+kubeadm_controller_manager_extra_args: []
+kubeadm_scheduler_extra_args: []
+kubeadm_api_server_extra_volumes: []
+kubeadm_controller_manager_extra_volumes: []
+kubeadm_scheduler_extra_volumes: []
+kubeadm_kubelet_extra_args:
+  - name: cloud-provider
+    value: external

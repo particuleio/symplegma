@@ -1,0 +1,1 @@
+"""Symplegma configuration validation."""

@@ -1,0 +1,29 @@
+---
+- name: Require current Ansible and Linux inventories
+  ansible.builtin.assert:
+    that:
+      - ansible_version.full is version('2.21', '>=')
+      - groups.get('win_node', []) | length == 0
+      - groups.get('master', []) | length > 0
+      - container_runtime | default('containerd') in ['containerd', 'crio']
+    fail_msg: Use Ansible 14 / ansible-core 2.21 or newer and a Linux-only inventory.
+  run_once: true
+
+- name: Check CRI-O and Kubernetes minor versions
+  ansible.builtin.assert:
+    that:
+      - (crio_version | default('v1.36.5')).split('.')[0:2] == (kubernetes_version | default('v1.37.0')).split('.')[0:2]
+    fail_msg: >-
+      CRI-O currently publishes v1.36.5. Use Kubernetes v1.36.4 with CRI-O,
+      or use containerd with Kubernetes v1.37.0.
+  when: container_runtime | default('containerd') == 'crio'
+
+- name: Require systemd cgroups for current Kubernetes
+  ansible.builtin.assert:
+    that:
+      - systemd_cgroup | default(true) | bool
+    fail_msg: Current Kubernetes requires systemd cgroups. Replace legacy cgroupfs nodes before upgrading.
+
+- name: Check for cgroup v2 before changing the host
+  ansible.builtin.raw: test -f /sys/fs/cgroup/cgroup.controllers
+  changed_when: false

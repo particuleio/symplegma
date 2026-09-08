@@ -1,3 +1,4 @@
+---
 cri_socket: >-
   {%- if container_runtime is undefined -%}
   unix:///run/containerd/containerd.sock

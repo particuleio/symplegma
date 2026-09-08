@@ -1,0 +1,93 @@
+---
+- name: Drain the node before changing its runtime or kubelet
+  ansible.builtin.command:
+    argv:
+      - "{{ bin_dir | default('/opt/bin') }}/kubectl"
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - drain
+      - "{{ kubeadm_node_name | default(ansible_facts.hostname) }}"
+      - --ignore-daemonsets
+      - "--timeout={{ upgrade_drain_timeout | default('10m') }}"
+  delegate_to: "{{ groups['master'] | first }}"
+  changed_when: true
+
+- name: Update containerd
+  ansible.builtin.include_role:
+    name: symplegma-containerd
+  when: container_runtime | default('containerd') == 'containerd'
+
+- name: Update CRI-O
+  ansible.builtin.include_role:
+    name: symplegma-crio
+  when: container_runtime | default('containerd') == 'crio'
+
+- name: Update the CNI binaries
+  ansible.builtin.include_role:
+    name: symplegma-cni
+
+- name: Apply runtime changes before asking kubeadm to use the runtime
+  ansible.builtin.meta: flush_handlers
+
+- name: Install the target kubeadm before upgrading the control plane
+  ansible.builtin.get_url:
+    url: "{{ upgrade_kubeadm_url }}"
+    checksum: "sha256:{{ upgrade_kubeadm_url }}.sha256"
+    dest: "{{ bin_dir | default('/opt/bin') }}/kubeadm"
+    mode: "0755"
+  vars:
+    upgrade_arch: "{{ {'x86_64': 'amd64', 'aarch64': 'arm64'}[ansible_facts.architecture] }}"
+    upgrade_kubeadm_url: "https://dl.k8s.io/release/{{ kubeadm_version | default(kubernetes_version) }}/bin/linux/{{ upgrade_arch }}/kubeadm"
+
+- name: Upgrade the first control plane and cluster configuration
+  ansible.builtin.command:
+    argv:
+      - "{{ bin_dir | default('/opt/bin') }}/kubeadm"
+      - upgrade
+      - apply
+      - "{{ kubernetes_version }}"
+      - --yes
+  changed_when: true
+  when: inventory_hostname == groups['master'] | first
+
+- name: Upgrade the remaining control planes and worker configuration
+  ansible.builtin.command:
+    argv:
+      - "{{ bin_dir | default('/opt/bin') }}/kubeadm"
+      - upgrade
+      - node
+  changed_when: true
+  when: inventory_hostname != groups['master'] | first
+
+- name: Install the target kubelet and client binaries
+  ansible.builtin.include_role:
+    name: symplegma-kubernetes_hosts
+
+- name: Refresh worker proxy and node-specific kubelet configuration
+  ansible.builtin.include_role:
+    name: symplegma-kubeadm/node
+  when: inventory_hostname in groups.get('node', [])
+
+- name: Apply pending kubelet configuration changes
+  ansible.builtin.meta: flush_handlers
+
+- name: Wait for the upgraded node to become ready
+  ansible.builtin.command:
+    argv:
+      - "{{ bin_dir | default('/opt/bin') }}/kubectl"
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - wait
+      - "--for=condition=Ready"
+      - "node/{{ kubeadm_node_name | default(ansible_facts.hostname) }}"
+      - "--timeout={{ upgrade_ready_timeout | default('5m') }}"
+  delegate_to: "{{ groups['master'] | first }}"
+  changed_when: false
+
+- name: Uncordon the successfully upgraded node
+  ansible.builtin.command:
+    argv:
+      - "{{ bin_dir | default('/opt/bin') }}/kubectl"
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - uncordon
+      - "{{ kubeadm_node_name | default(ansible_facts.hostname) }}"
+  delegate_to: "{{ groups['master'] | first }}"
+  changed_when: true

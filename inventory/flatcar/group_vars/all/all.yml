@@ -12,8 +12,9 @@ ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
 # ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@{{ ansible_ssh_bastion_host }}"'
 # ansible_ssh_bastion_host: __BASTION_IP__
 
-kubeadm_version: v1.24.1
-kubernetes_version: v1.24.1
+kubeadm_version: "{{ kubernetes_version }}"
+# renovate: datasource=github-releases depName=kubernetes/kubernetes
+kubernetes_version: v1.37.0
 # If deploying HA clusters, specify the loadbalancer IP or domain name and port
 # in front of the control plane nodes:
 # kubernetes_api_server_address: __LB_HOSTNAME__
@@ -25,23 +26,26 @@ bin_dir: /opt/bin
 # bin_dir: /opt/bin
 
 # Customize API server
-kubeadm_api_server_extra_args: {}
-kubeadm_api_server_extra_volumes: {}
+kubeadm_api_server_extra_args: []
+kubeadm_api_server_extra_volumes: []
 
 # Customize controller manager scheduler
 # eg. to publish prometheus metrics on "0.0.0.0":
-# kubeadm_controller_manager_extra_args: |
-#   address: 0.0.0.0
-kubeadm_controller_manager_extra_args: |
-  flex-volume-plugin-dir: "/opt/libexec/kubernetes/kubelet-plugins/volume/exec/"
-kubeadm_controller_manager_extra_volumes: {}
+# kubeadm_controller_manager_extra_args:
+#   - name: bind-address
+#     value: 0.0.0.0
+kubeadm_controller_manager_extra_args:
+  - name: flex-volume-plugin-dir
+    value: "/opt/libexec/kubernetes/kubelet-plugins/volume/exec/"
+kubeadm_controller_manager_extra_volumes: []
 
 # Customize scheduler manager scheduler
 # eg. to publish prometheus metrics on "0.0.0.0":
-# kubeadm_scheduler_extra_args: |
-#   address: 0.0.0.0
-kubeadm_scheduler_extra_volumes: {}
-kubeadm_scheduler_extra_args: {}
+# kubeadm_scheduler_extra_args:
+#   - name: bind-address
+#     value: 0.0.0.0
+kubeadm_scheduler_extra_volumes: []
+kubeadm_scheduler_extra_args: []
 
 # Customize Kubelet
 # `kubeadm_kubelet_extra_args` is to be used as a last resort,
@@ -49,22 +53,21 @@ kubeadm_scheduler_extra_args: {}
 # please see
 # https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for
 # more information
-kubeadm_kubelet_component_config: |
+kubeadm_kubelet_component_config:
   volumePluginDir: "/opt/libexec/kubernetes/kubelet-plugins/volume/exec/"
-kubeadm_kubelet_extra_args: {}
-
+kubeadm_kubelet_extra_args: []
 
 # Customize Kube Proxy configuration using native Kubeadm API
 # eg. to publish prometheus metrics on "0.0.0.0":
-# kubeadm_kube_proxy_component_config: |
+# kubeadm_kube_proxy_component_config:
 #   metricsBindAddress: 0.0.0.0
 kubeadm_kube_proxy_component_config: {}
 
 # Additionnal subject alternative names for the API server
 # eg. to add aditionnals domains:
-# kubeadm_api_server_cert_extra_sans: |
+# kubeadm_api_server_cert_extra_sans:
 #   - mydomain.example.com
-kubeadm_api_server_cert_extra_sans: {}
+kubeadm_api_server_cert_extra_sans: []
 
 kubeadm_cluster_name: symplegma
 
@@ -77,7 +80,7 @@ kubeadm_cluster_name: symplegma
 # has created Pods using the semantics of one cgroup driver, changing the
 # container runtime to another cgroup driver can cause errors when trying to
 # re-create the Pod sandbox for such existing Pods. Restarting the kubelet may
-# not solve such errors. Default is to use cgroupfs.
-# systemd_cgroup: true
+# not solve such errors. The default is systemd.
+systemd_cgroup: true
 
 container_runtime: containerd

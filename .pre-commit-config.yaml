@@ -1,0 +1,82 @@
+---
+minimum_pre_commit_version: '4.6.0'
+default_language_version:
+  python: python3
+exclude: ^(roles/|images/|docs/images/)
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+        exclude: ^mkdocs.yml$
+      - id: check-yaml
+        name: Check MkDocs YAML with Python extension tags
+        args: [--unsafe]
+        files: ^mkdocs.yml$
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.6
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+      - id: shellcheck
+        name: ShellCheck the Flatcar Python bootstrap
+        args: [roles/symplegma-os_bootstrap/files/bootstrap.sh]
+        pass_filenames: false
+        always_run: true
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.30.0
+    hooks:
+      - id: zizmor
+        args: [--offline, --strict-collection, --pedantic, --no-progress]
+
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v26.8.0
+    hooks:
+      - id: ansible-lint
+        language_version: python3
+        additional_dependencies:
+          - ansible==14.3.1
+          - ansible-core==2.21.3
+        args: [--offline, symplegma-init.yml, symplegma-upgrade.yml, symplegma-reset.yml]
+
+  - repo: local
+    hooks:
+      - id: uv-lock
+        name: Check the uv lockfile
+        entry: uv lock --check
+        language: system
+        files: ^(pyproject\.toml|uv\.lock|\.python-version)$
+        pass_filenames: false
+      - id: render-configurations
+        name: Validate rendered Kubernetes and runtime configurations
+        entry: python -m unittest discover -s tests -v
+        language: python
+        additional_dependencies:
+          - ansible==14.3.1
+          - ansible-core==2.21.3
+        pass_filenames: false
+        always_run: true

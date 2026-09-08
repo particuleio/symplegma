@@ -1,0 +1,7 @@
+[tools]
+uv = "0.12.10"
+node = "24.20.0"
+just = "1.58.0"
+
+[env]
+ANSIBLE_HOME = "{{config_root}}/.ansible"

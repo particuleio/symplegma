@@ -13,8 +13,8 @@ theme:
   name: 'material'
   logo: "images/logo-white.svg"
   features:
-    - tabs
-    - instant
+    - navigation.tabs
+    - navigation.instant
 
 markdown_extensions:
   - toc:
@@ -57,6 +57,7 @@ nav:
       - Container Runtimes:
           - CRI-O: configuration/container_runtimes/crio.md
           - Containerd: configuration/container_runtimes/containerd.md
+  - Maintenance: maintaining.md
   - User Guides:
       - Bare-Metal: user-guides/bare-metal.md
       - AWS: user-guides/aws.md

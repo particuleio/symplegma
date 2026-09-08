@@ -1,0 +1,11 @@
+---
+profile: moderate
+exclude_paths:
+  - .venv/
+  - .ansible/
+  - .github/
+  - contrib/aws/terraform/
+  - tests/output/
+# The upstream kubeadm repository intentionally contains master/ and node/ roles.
+skip_list:
+  - role-name[path]

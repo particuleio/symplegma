@@ -4,9 +4,8 @@
   <img src="images/logo.png">
 </p>
 
-![symplegma:mkdocs](https://github.com/clusterfrak-dynamics/symplegma/workflows/symplegma:mkdocs/badge.svg)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_shield)
+[![Documentation](https://github.com/particuleio/symplegma/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/particuleio/symplegma/actions/workflows/mkdocs.yml)
+[![CI](https://github.com/particuleio/symplegma/actions/workflows/ci.yml/badge.svg)](https://github.com/particuleio/symplegma/actions/workflows/ci.yml)
 
 <p align="left">
 <a href="https://github.com/cncf/k8s-conformance"><img src="https://github.com/cncf/artwork/raw/master/projects/kubernetes/certified-kubernetes/versionless/color/certified-kubernetes-color.png" alt="Certified Kubernetes" title="Certified Kubernetes" width=75 style="vertical-align:middle;margin:10px 20px" /></a>
@@ -15,21 +14,19 @@
 
 Symplegma (from greek *σύμπλεγμα*) is a simple set of [Ansible](https://www.ansible.com/) playbooks to deploy [Kubernetes](https://kubernetes.io/) with [Kubeadm](https://kubernetes.io/docs/setup/independent/high-availability/). It is heavily inspired by [Kubespray](https://github.com/kubernetes-incubator/kubespray) and [OpenStack Ansible](https://docs.openstack.org/openstack-ansible/latest/).
 
-Symplegma is [Kubernetes certified](https://github.com/cncf/k8s-conformance/tree/master/v1.20/symplegma) since `v1.12`. Check out [CNCF Landscape](https://landscape.cncf.io/).
+Historical releases have [Kubernetes conformance results](https://github.com/cncf/k8s-conformance/tree/master/v1.20/symplegma). The refreshed stack has not yet been submitted for conformance certification.
 
 The main goal is to be minimalist with sensible defaults.
 
-:warning: starting in v2, ansible role support for CNI plugin has been removed,
-as most commonly used plugin use straight foward deployment process. To migrate
-to tigera operator please see [this
-guide](https://projectcalico.docs.tigera.io/maintenance/operator-migration).
-Support to install more CNI with native installation might be added in the
-futur.
+Flannel is included. Install other cluster networking providers independently;
+legacy Calico/operator roles are no longer part of the supported requirements.
 
 ## Deploys a Kubernetes cluster
 
 - Deploys vanilla Kubernetes with Kubeadm.
-- Supports [Flatcar Linux](https://www.flatcar-linux.org/) / Ubuntu 20.04
+- Targets current stable [Flatcar Linux](https://www.flatcar.org/) and Ubuntu 24.04 / 26.04, on amd64 and arm64 with cgroup v2.
+- Requires Python 3.12 or newer on the Ansible controller.
+- Windows workers are retired.
 - Does not rely on Docker
 - Uses CRI compatible runtime:
     - [containerd][cri-containerd] (default)
@@ -37,14 +34,42 @@ futur.
 - Does not depend on cloud provider
 - Does not depend on primary master
 - Dynamic config
-- Always up to date: No deprecated options
+- Pins component versions for reproducible installations
 
 [cri-crio]: https://cri-o.io/
 [cri-containerd]: https://github.com/containerd/containerd
 
+## Install and validate
+
+```sh
+mise install
+just setup
+just check
+```
+
+Mise pins uv, Node and just; uv selects Python from `.python-version`, resolves the
+Ansible/development/documentation groups in `pyproject.toml`, and reproduces them
+from `uv.lock`. No virtualenv activation is needed. Without mise, use
+`uv sync --locked --all-groups` and `uv run --locked` before each command.
+
+The install script fetches the exact published roles in `requirements.yml`.
+It preserves existing role checkouts and refuses mismatched revisions; no
+local compatibility patches or virtualenv activation are needed.
+
+The default stack is Kubernetes / kubeadm / kubelet / kubectl **1.37.0**,
+containerd **2.3.5**, runc **1.5.1**, CNI plugins **1.9.1**, and crictl **1.37.0**.
+CRI-O **1.36.5** with crun **1.29.1** is also available, paired with Kubernetes
+**1.36.4** until CRI-O publishes its 1.37 series. Ansible is pinned to **14.3.1**
+and ansible-core **2.21.3**. See [the release inventory](https://particuleio.github.io/symplegma/maintaining/).
+
+Existing clusters must follow Kubernetes' sequential minor upgrade policy.
+`symplegma-upgrade.yml` drains each node, upgrades control planes before worker
+kubelets, waits for readiness, then uncordons. A failed upgrade leaves the node
+cordoned. This is not a direct upgrade path from the former 1.24 defaults.
+
 ## Documentation
 
-Documentation is generated using [mkdocs][mkdocs] and the sources are located in the [`./docs/`](./docs/) directory.
+Documentation is generated using [mkdocs][mkdocs] and the sources are located in the [`docs/`](https://github.com/particuleio/symplegma/tree/main/docs) directory.
 
 It is available online at [particuleio.github.io/symplegma](https://particuleio.github.io/symplegma/).
 
@@ -54,14 +79,11 @@ It is available online at [particuleio.github.io/symplegma](https://particuleio.
 
 - [symplegma-os_bootstrap][role-os_bootstrap]: Configure the hosts OS to support Vanilla Kubernetes
 - [symplegma-kubernetes_hosts][role-kubernetes_hosts]: Bootstrap Kubernetes on Linux hosts
-- [symplegma-win_kubernetes_hosts][role-symplegma-win_kubernetes_hosts]: Bootstrap Kubernetes on Windows hosts
 - [symplegma-kubeadm][role-symplegma-kubeadm]: Bootstrap the Kubernetes Cluster using `kubeadm`
 - [symplegma-containerd][role-symplegma-containerd]: Install the [containerd][cri-containerd] CRI
 - [symplegma-crio][role-symplegma-crio]: Install the [cri-o][cri-crio] CRI
-- [symplegma-win_docker][role-symplegma-win_docker]: Install the [docker][cri-docker] CRI on Windows hosts
 - [symplegma-cni][role-symplegma-cni]: Boostrap the hosts to install the CNI
 - [symplegma-flannel][role-symplegma-flannel]: Bootstrap and install the Flannel CNI
-- [symplegma-win_cni][role-symplegma-win_cni]: Bootstrap Windows hosts to install the CNI
 
 [role-os_bootstrap]: https://github.com/particuleio/symplegma-os_bootstrap.git
 [role-kubernetes_hosts]: https://github.com/particuleio/symplegma-kubernetes_hosts
@@ -70,9 +92,6 @@ It is available online at [particuleio.github.io/symplegma](https://particuleio.
 [role-symplegma-crio]: https://github.com/particuleio/symplegma-crio
 [role-symplegma-cni]: https://github.com/particuleio/symplegma-cni
 [role-symplegma-flannel]: https://github.com/particuleio/symplegma-flannel
-[role-symplegma-win_cni]: https://github.com/particuleio/symplegma-win_cni
-[role-symplegma-win_kubernetes_hosts]: https://github.com/particuleio/symplegma-win_kubernetes_hosts
-[role-symplegma-win_docker]: https://github.com/particuleio/symplegma-win_docker
 
 ## Roadmap
 
@@ -82,7 +101,9 @@ It is available online at [particuleio.github.io/symplegma](https://particuleio.
 
 ## Contributing
 
-Each role is hosted in a separate repository in [particuleio](https://github.com/particuleio). Exhaustive list of roles can be found in `requirements.yml`
+Each role is hosted in a separate repository in [particuleio](https://github.com/particuleio).
+`requirements.yml` pins their published releases. `scripts/install-roles.py`
+installs and verifies those revisions; local clones remain editable
+under `roles/`. See [maintenance and validation](https://particuleio.github.io/symplegma/maintaining/).
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclusterfrak-dynamics%2Fsymplegma?ref=badge_large)

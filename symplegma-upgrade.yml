@@ -1,71 +1,109 @@
 ---
-- hosts: master:node
+- name: Validate the upgrade before changing any host
+  hosts: master:node
   gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: Validate deployment prerequisites
+      ansible.builtin.import_tasks: tasks/preflight.yml
+      tags: always
+
+    - name: Read the current API server version
+      ansible.builtin.raw: >-
+        {{ bin_dir | default('/opt/bin') }}/kubectl
+        --kubeconfig /etc/kubernetes/admin.conf version --output=json
+      delegate_to: "{{ groups['master'] | first }}"
+      run_once: true
+      changed_when: false
+      register: upgrade_cluster_version
+      tags: always
+
+    - name: Require a supported single-minor Kubernetes upgrade
+      ansible.builtin.assert:
+        that:
+          - target_version is version(current_version, '>=')
+          - target_version.split('.')[0] == current_version.split('.')[0]
+          - (target_version.split('.')[1] | int) - (current_version.split('.')[1] | int) in [0, 1]
+          - (kubeadm_version | default(kubernetes_version)) == kubernetes_version
+        fail_msg: >-
+          Upgrade one Kubernetes minor at a time, with kubeadm and kubelet at the
+          target version. Direct upgrades from the former 1.24 defaults are unsupported.
+      vars:
+        current_version: "{{ (upgrade_cluster_version.stdout | from_json).serverVersion.gitVersion | regex_replace('^v', '') }}"
+        target_version: "{{ kubernetes_version | regex_replace('^v', '') }}"
+      tags: always
+
+    - name: Read the installed containerd version before changing any host
+      ansible.builtin.raw: "{{ bin_dir | default('/opt/bin') }}/containerd --version"
+      changed_when: false
+      register: installed_containerd
+      when: container_runtime | default('containerd') == 'containerd'
+      tags: always
+
+    - name: Require a supported containerd upgrade path
+      ansible.builtin.assert:
+        that:
+          - target_runtime is version('2.3.0', '>=')
+          - current_runtime is version(target_runtime, '<=')
+          - >-
+            (current_parts[0] == target_parts[0] and
+             (target_parts[1] | int) - (current_parts[1] | int) in [0, 1]) or
+            (current_parts[0:2] == ['1', '7'] and target_parts[0:2] == ['2', '3'])
+        fail_msg: >-
+          This role's native config requires containerd 2.3 or newer.
+          Containerd needs its own supported upgrade path. Sequential minor
+          upgrades and the documented 1.7 LTS to 2.3 LTS migration are allowed.
+          Resolve runtime deprecations and back up its configuration first.
+      vars:
+        current_runtime: "{{ installed_containerd.stdout | regex_search('[0-9]+\\.[0-9]+\\.[0-9]+') }}"
+        target_runtime: "{{ containerd_version | default('2.3.5') }}"
+        current_parts: "{{ current_runtime.split('.') }}"
+        target_parts: "{{ target_runtime.split('.') }}"
+      when: container_runtime | default('containerd') == 'containerd'
+      tags: always
+
+    - name: Confirm recovery preparation before mutating the cluster
+      ansible.builtin.assert:
+        that:
+          - upgrade_backup_confirmed | default(false) | bool
+          - upgrade_maintenance_confirmed | default(false) | bool
+        fail_msg: >-
+          Verify a recoverable etcd snapshot and application-volume backups,
+          and approve a maintenance window. Then explicitly set
+          upgrade_backup_confirmed=true and upgrade_maintenance_confirmed=true.
+      tags: upgrade
+
+- name: Refresh Linux bootstrap prerequisites
+  hosts: master:node
+  gather_facts: false
+  any_errors_fatal: true
   roles:
     - symplegma-os_bootstrap
-  tags:
-    - bootstrap
 
-- hosts: master:node
+- name: Upgrade control plane nodes one at a time
+  hosts: master
   serial: 1
+  any_errors_fatal: true
   vars_files:
     - defaults/main.yml
-  roles:
-    - role: symplegma-containerd
-      tags:
-        - containerd
-      when: container_runtime == "containerd"
-    - role: symplegma-crio
-      tags:
-        - crio
-      when: container_runtime == "crio"
-    - role: symplegma-cni
-      tags:
-        - cni
-    - role: symplegma-kubernetes_hosts
-      tags:
-        - kubernetes_hosts
+  tasks:
+    - name: Upgrade this control plane node
+      ansible.builtin.include_tasks: tasks/upgrade-node.yml
 
-- hosts: master
+- name: Upgrade Linux workers one at a time
+  hosts: node
   serial: 1
+  any_errors_fatal: true
   vars_files:
     - defaults/main.yml
-  roles:
-    - role: symplegma-kubeadm/master
-      tags:
-        - kubeadm-master
+  tasks:
+    - name: Upgrade this worker
+      ansible.builtin.include_tasks: tasks/upgrade-node.yml
 
-- hosts: node
-  serial: 1
-  vars_files:
-    - defaults/main.yml
-  roles:
-    - role: symplegma-kubeadm/node
-      tags:
-        - kubeadm-node
-
-- hosts: master
+- name: Update the network plugin
+  hosts: master
   vars_files:
     - defaults/main.yml
   roles:
     - role: symplegma-flannel
-      tags: flannel
-      when: cni_plugin is defined and cni_plugin == "flannel"
-
-- hosts: win_node
-  serial: 1
-  vars_files:
-    - defaults/main.yml
-  roles:
-    - role: symplegma-win_docker
-      tags:
-        - win_docker
-    - role: symplegma-win_cni
-      tags:
-        - win_cni
-    - role: symplegma-win_kubernetes_hosts
-      tags:
-        - win_kubernetes_hosts
-    - role: symplegma-kubeadm/win_node
-      tags:
-        - kubeadm-win_node
+      when: cni_plugin | default('') == 'flannel'

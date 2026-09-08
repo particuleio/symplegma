@@ -1,61 +1,73 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    ":separateMajorReleases",
-    ":prImmediately",
-    ":updateNotScheduled",
-    ":automergeDisabled",
-    ":disableRateLimiting",
-    ":ignoreModulesAndTests",
-    ":autodetectPinVersions",
-    ":gitSignOff",
-    "group:monorepos",
-    "group:recommended",
-    "helpers:disableTypesNodeMajor",
-    "workarounds:all",
-    ":automergeDigest",
-    ":automergePatch",
-    ":automergeMinor",
-    ":dependencyDashboard"
+    "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    ":semanticCommits"
   ],
-  "baseBranches": ["main"],
-  "enabledManagers": ["ansible-galaxy", "github-actions", "pre-commit"],
-  "semanticCommits": "enabled",
-  "automergeType": "pr-comment",
-  "automergeComment": "renovate:merge",
-  "versionScheme": "semver",
-  "ignoreUnstable": false,
-  "reviewers": [
-    "team:team"
+  "enabledManagers": [
+    "ansible-galaxy",
+    "github-actions",
+    "custom.regex",
+    "pre-commit",
+    "pep621",
+    "mise"
   ],
-  "prHourlyLimit": 0,
+  "ignoreUnstable": true,
+  "automerge": false,
+  "ignorePaths": [
+    "roles/**",
+    ".venv/**"
+  ],
   "packageRules": [
-      {
-        "matchManagers": ["github-actions"],
-        "semanticCommitScope": "ci",
-        "semanticCommitType": "chore"
-      },
-      {
-        "matchManagers": ["pre-commit"],
-        "semanticCommitScope": "ci",
-        "semanticCommitType": "chore"
-      },
-      {
-        "matchManagers": ["ansible-galaxy"],
-        "semanticCommitScope": "requirement",
-        "semanticCommitType": "fix",
-        "matchUpdateTypes": ["patch", "digest"]
-      },
-      {
-        "matchManagers": ["ansible-galaxy"],
-        "semanticCommitScope": "requirement",
-        "semanticCommitType": "feat",
-        "matchUpdateTypes": ["major", "minor"]
-      },
-      {
-        "matchManagers": ["ansible-galaxy"],
-        "semanticCommitScope": "requirement",
-        "semanticCommitType": "feat",
-        "automerge": false
-      }
-    ]
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "GitHub Actions",
+      "semanticCommitType": "ci"
+    },
+    {
+      "matchPackageNames": [
+        "ansible",
+        "ansible-core"
+      ],
+      "groupName": "Ansible",
+      "rangeStrategy": "pin"
+    },
+    {
+      "matchPackageNames": [
+        "containers/crun"
+      ],
+      "enabled": false,
+      "description": "Update the crun binary pin and its per-architecture SHA256 digests together."
+    },
+    {
+      "matchPackageNames": [
+        "kubernetes/kubernetes"
+      ],
+      "groupName": "Kubernetes"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github\\/workflows\\/renovate\\.yml$/"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+run: npx --yes --package=renovate@(?<currentValue>\\S+)"
+      ]
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^inventory\\/.*\\/group_vars\\/all\\/all\\.yml$/"
+      ],
+      "matchStrings": [
+        "(?:^|\\n)\\+?# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\+?\\w+: (?<currentValue>\\S+)"
+      ],
+      "versioningTemplate": "semver"
+    }
+  ]
 }

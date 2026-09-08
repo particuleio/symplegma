@@ -2,40 +2,28 @@
 - name: symplegma-os_bootstrap
   scm: git
   src: https://github.com/particuleio/symplegma-os_bootstrap.git
-  version: v1.17.0
+  version: v2.0.0
 - name: symplegma-kubernetes_hosts
   scm: git
   src: https://github.com/particuleio/symplegma-kubernetes_hosts
-  version: v1.24.1-rel.1
+  version: v1.37.0-rel.0
 - name: symplegma-kubeadm
   scm: git
   src: https://github.com/particuleio/symplegma-kubeadm
-  version: v1.24.1-rel.1
+  version: v1.37.0-rel.0
 - name: symplegma-containerd
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
-  version: v1.6.6-rel.1
+  version: v2.3.5-rel.0
 - name: symplegma-crio
   scm: git
   src: https://github.com/particuleio/symplegma-crio
-  version: v1.24.1-rel.2
+  version: v1.36.5-rel.0
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni
-  version: v1.1.1-rel.1
+  version: v1.9.1-rel.0
 - name: symplegma-flannel
   scm: git
   src: https://github.com/particuleio/symplegma-flannel
-  version: v0.18.1-rel.0
-- name: symplegma-win_cni
-  scm: git
-  src: https://github.com/particuleio/symplegma-win_cni
-  version: v1.1.1
-- name: symplegma-win_kubernetes_hosts
-  scm: git
-  src: https://github.com/particuleio/symplegma-win_kubernetes_hosts
-  version: v1.24.1-rel.0
-- name: symplegma-win_docker
-  scm: git
-  src: https://github.com/particuleio/symplegma-win_docker
-  version: v1.0.0
+  version: v0.28.9-rel.0

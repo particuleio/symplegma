@@ -1,23 +1,44 @@
 ---
-- hosts: master:node
+- name: Bootstrap Linux hosts
+  hosts: master:node
   gather_facts: false
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Validate deployment prerequisites
+      ansible.builtin.import_tasks: tasks/preflight.yml
+      tags: always
+    - name: Read the version of an existing node
+      ansible.builtin.raw: >-
+        if test -f /etc/kubernetes/kubelet.conf; then
+          {{ bin_dir | default('/opt/bin') }}/kubelet --version;
+        fi
+      register: existing_kubelet
+      changed_when: false
+      tags: always
+    - name: Require the upgrade playbook for existing nodes
+      ansible.builtin.assert:
+        that:
+          - existing_kubelet.stdout | trim == '' or (kubernetes_version | default('v1.37.0')) in existing_kubelet.stdout.split()
+        fail_msg: Use symplegma-upgrade.yml to change an existing node's Kubernetes version.
+      tags: always
   roles:
     - symplegma-os_bootstrap
   tags:
     - bootstrap
 
-- hosts: master:node
+- name: Install Kubernetes components
+  hosts: master:node
   vars_files:
     - defaults/main.yml
   roles:
     - role: symplegma-containerd
       tags:
         - containerd
-      when: container_runtime == "containerd"
+      when: container_runtime | default("containerd") == "containerd"
     - role: symplegma-crio
       tags:
         - crio
-      when: container_runtime == "crio"
+      when: container_runtime | default("containerd") == "crio"
     - role: symplegma-cni
       tags:
         - cni
@@ -25,7 +46,8 @@
       tags:
         - kubernetes_hosts
 
-- hosts: master
+- name: Configure the control plane
+  hosts: master
   vars_files:
     - defaults/main.yml
   roles:
@@ -33,7 +55,8 @@
       tags:
         - kubeadm-master
 
-- hosts: node
+- name: Join Linux workers
+  hosts: node
   vars_files:
     - defaults/main.yml
   roles:
@@ -41,27 +64,11 @@
       tags:
         - kubeadm-node
 
-- hosts: master
+- name: Install the network plugin
+  hosts: master
   vars_files:
     - defaults/main.yml
   roles:
     - role: symplegma-flannel
       tags: flannel
       when: cni_plugin is defined and cni_plugin == "flannel"
-
-- hosts: win_node
-  vars_files:
-    - defaults/main.yml
-  roles:
-    - role: symplegma-win_docker
-      tags:
-        - win_docker
-    - role: symplegma-win_cni
-      tags:
-        - win_cni
-    - role: symplegma-win_kubernetes_hosts
-      tags:
-        - win_kubernetes_hosts
-    - role: symplegma-kubeadm/win_node
-      tags:
-        - kubeadm-win_node

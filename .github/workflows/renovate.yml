@@ -1,35 +1,35 @@
-name: 'check-renovate-config'
+---
+name: Renovate configuration
 
 on:
   push:
-    branches:
-    - main
-    - release
-    paths:
-    - '.github/renovate.json'
+    branches: [main]
+    paths: ['.github/renovate.json', '.github/workflows/renovate.yml']
   pull_request:
-    branches:
-      - main
-      - release
-    paths:
-    - '.github/renovate.json'
+    paths: ['.github/renovate.json', '.github/workflows/renovate.yml']
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: renovate-config-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  renovate-config-check:
-    name: 'renovate:config'
-    runs-on: ubuntu-20.04
+  validate:
+    name: Validate Renovate configuration
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '15'
-        check-latest: true
-
-    - name: Install Renovate
-      run: npm install -g renovate
-
-    - name: Check Renovate configuraton
-      run: renovate-config-validator
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+      - name: Validate Renovate configuration
+        # renovate: datasource=npm depName=renovate
+        run: npx --yes --package=renovate@44.69.9 renovate-config-validator --strict .github/renovate.json

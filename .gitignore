@@ -6,3 +6,8 @@ kubeconfig/*
 site/*
 .terraform.lock.hcl
 .terraform
+.venv/
+.ansible/
+.cache/
+__pycache__/
+tests/output/
