@@ -108,7 +108,13 @@ backups, and a maintenance window. Full upgrade execution requires explicit
 `upgrade_backup_confirmed=true` and `upgrade_maintenance_confirmed=true`.
 A single control-plane node has API downtime; workloads without another node
 cannot be rescheduled while it is drained. The playbook does not bypass PDBs
-or discard emptyDir data.
+and refuses to discard emptyDir data by default.
+
+If drain reports pods with local storage, inspect their emptyDir volumes first.
+To explicitly accept permanent deletion of their contents, add
+`-e upgrade_drain_delete_emptydir_data=true` to the full upgrade command.
+This does not delete PVCs or hostPath directories and does not bypass PDBs.
+On a failed upgrade the node stays cordoned; resolve the failure before retrying.
 
 `just validate-kubeadm v1.33.13 v1.34.11 v1.35.8 v1.36.4` validates generated
 configuration offline with each actual target binary; it is not a live-cluster
