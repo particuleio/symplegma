@@ -16,12 +16,11 @@ with nodes configured for cgroup v2 and systemd before moving to this stack.
 The role chooses amd64 or arm64 downloads from the host facts and verifies the
 upstream checksums. `containerd_config` remains available for custom TOML.
 
-## crun support (unreleased)
+## crun support
 
-The locally prepared containerd role adds crun 1.29.1 alongside runc, with
-checksum-verified binaries and separate runtime handlers. This is not yet in
-the role release pinned by `requirements.yml` or the Blackwell upgrade checkout.
-After publishing and installing that role release, select it with:
+The containerd role v2.3.5-rel.1 adds crun 1.29.1 alongside runc, with
+checksum-verified binaries and separate runtime handlers. runc remains the
+default; installing the role does not select crun. To opt in, set:
 
 ```yaml
 container_runtime: containerd

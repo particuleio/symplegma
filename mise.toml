@@ -5,3 +5,5 @@ just = "1.58.0"
 
 [env]
 ANSIBLE_HOME = "{{config_root}}/.ansible"
+# Avoid fork-unsafe macOS proxy discovery; preserve proxy settings on other OSes.
+no_proxy = "{% if os() == 'macos' %}*{% elif env.no_proxy is defined %}{{ env.no_proxy }}{% elif env.NO_PROXY is defined %}{{ env.NO_PROXY }}{% endif %}"

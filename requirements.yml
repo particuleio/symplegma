@@ -14,11 +14,11 @@
 - name: symplegma-containerd
   scm: git
   src: https://github.com/particuleio/symplegma-containerd
-  version: v2.3.5-rel.0
+  version: v2.3.5-rel.1
 - name: symplegma-crio
   scm: git
   src: https://github.com/particuleio/symplegma-crio
-  version: v1.36.5-rel.0
+  version: v1.36.5-rel.1
 - name: symplegma-cni
   scm: git
   src: https://github.com/particuleio/symplegma-cni

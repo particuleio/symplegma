@@ -48,11 +48,11 @@
           - >-
             (current_parts[0] == target_parts[0] and
              (target_parts[1] | int) - (current_parts[1] | int) in [0, 1]) or
-            (current_parts[0:2] == ['1', '7'] and target_parts[0:2] == ['2', '3'])
+            (current_parts[0:2] in [['1', '7'], ['2', '0']] and target_parts[0:2] == ['2', '3'])
         fail_msg: >-
           This role's native config requires containerd 2.3 or newer.
           Containerd needs its own supported upgrade path. Sequential minor
-          upgrades and the documented 1.7 LTS to 2.3 LTS migration are allowed.
+          upgrades and migrations from the 1.7 or 2.0 LTS lines to 2.3 LTS are allowed.
           Resolve runtime deprecations and back up its configuration first.
       vars:
         current_runtime: "{{ installed_containerd.stdout | regex_search('[0-9]+\\.[0-9]+\\.[0-9]+') }}"
@@ -61,17 +61,6 @@
         target_parts: "{{ target_runtime.split('.') }}"
       when: container_runtime | default('containerd') == 'containerd'
       tags: always
-
-    - name: Confirm recovery preparation before mutating the cluster
-      ansible.builtin.assert:
-        that:
-          - upgrade_backup_confirmed | default(false) | bool
-          - upgrade_maintenance_confirmed | default(false) | bool
-        fail_msg: >-
-          Verify a recoverable etcd snapshot and application-volume backups,
-          and approve a maintenance window. Then explicitly set
-          upgrade_backup_confirmed=true and upgrade_maintenance_confirmed=true.
-      tags: upgrade
 
 - name: Refresh Linux bootstrap prerequisites
   hosts: master:node

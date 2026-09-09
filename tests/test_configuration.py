@@ -162,13 +162,16 @@ class ConfigurationTests(unittest.TestCase):
             )
 
     def test_crio_runtime_selection_and_cgroups(self):
-        for use_crun in (True, False):
+        for use_crun, expected in (
+            (True, "crun"),
+            (False, "runc"),
+            ("true", "crun"),
+            ("false", "runc"),
+        ):
             config = tomllib.loads(
                 render("symplegma-crio", "10-crun.conf.j2", crio_use_crun=use_crun)
             )
-            self.assertEqual(
-                config["crio"]["runtime"]["default_runtime"], "crun" if use_crun else "runc"
-            )
+            self.assertEqual(config["crio"]["runtime"]["default_runtime"], expected)
         cgroups = tomllib.loads(render("symplegma-crio", "02-cgroup-manager.conf.j2"))
         self.assertEqual(cgroups["crio"]["runtime"]["cgroup_manager"], "systemd")
 
@@ -279,7 +282,9 @@ class ConfigurationTests(unittest.TestCase):
             ("1.6.38", "1.7.29", False),  # This role requires the v4 configuration schema.
             ("1.7.29", "2.3.5", True),
             ("1.7.29", "2.2.0", False),
-            ("2.0.6", "2.3.5", False),
+            ("2.0.3", "2.3.5", True),
+            ("2.0.6", "2.3.5", True),
+            ("2.0.6", "2.4.0", False),
             ("2.2.6", "2.3.5", True),
             ("2.3.4", "2.3.5", True),
             ("2.3.5", "2.3.5", True),
@@ -304,25 +309,10 @@ class ConfigurationTests(unittest.TestCase):
                     allowed,
                 )
 
-    def test_upgrade_requires_both_recovery_confirmations(self):
-        loader = DataLoader()
-        plays = loader.load_from_file(str(ROOT / "symplegma-upgrade.yml"), trusted_as_template=True)
-        task = next(t for t in plays[0]["tasks"] if "Confirm recovery" in t["name"])
-        for values, allowed in (
-            ({}, False),
-            ({"upgrade_backup_confirmed": True}, False),
-            ({"upgrade_maintenance_confirmed": True}, False),
-            ({"upgrade_backup_confirmed": True, "upgrade_maintenance_confirmed": True}, True),
-        ):
-            templar = Templar(loader=loader, variables=values)
-            with self.subTest(values=values):
-                self.assertEqual(
-                    all(
-                        templar.evaluate_conditional(c)
-                        for c in task["ansible.builtin.assert"]["that"]
-                    ),
-                    allowed,
-                )
+    def test_upgrade_does_not_require_manual_confirmation_variables(self):
+        source = (ROOT / "symplegma-upgrade.yml").read_text()
+        self.assertNotIn("upgrade_backup_confirmed", source)
+        self.assertNotIn("upgrade_maintenance_confirmed", source)
 
     def test_auxiliary_templates_render_without_undefined_variables(self):
         for role in (

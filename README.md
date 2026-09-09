@@ -67,8 +67,11 @@ Existing clusters must follow Kubernetes' sequential minor upgrade policy.
 kubelets, waits for readiness, then uncordons. A failed upgrade leaves the node
 cordoned. An explicit `-e upgrade_skip_drain=true` skips eviction for an accepted
 in-place upgrade, without guaranteeing workload availability; readiness checks
-and the final uncordon still run. This is not a direct upgrade path from the
-former 1.24 defaults.
+still run, but both drain and uncordon are skipped so scheduling state is left
+unchanged. This is not a direct upgrade path from the former 1.24 defaults.
+
+See [the v3.0.0 changelog and migration notes](https://github.com/particuleio/symplegma/blob/main/CHANGELOG.md) before upgrading an
+existing deployment.
 
 ## Documentation
 

@@ -83,10 +83,10 @@ each role repository. Never advance a requirement to a tag that does not exist.
 
 ## Sequential Kubernetes upgrades
 
-Skipping Kubernetes minor versions is unsupported. To reach 1.36 from 1.32,
-use 1.32 → 1.33 → 1.34 → 1.35 → 1.36, checking health after each step.
+Skipping Kubernetes minor versions is unsupported. To reach 1.37 from 1.32,
+use 1.32 → 1.33 → 1.34 → 1.35 → 1.36 → 1.37, checking health after each step.
 The current patch targets (checked 2026-09-09) are 1.32.13, 1.33.13, 1.34.11,
-1.35.8 and 1.36.4. Kubernetes 1.32 and 1.33 are end-of-life, so use them only as
+1.35.8, 1.36.4 and 1.37.0. Kubernetes 1.32 and 1.33 are end-of-life, so use them only as
 necessary transition steps. See the [kubeadm upgrade guide](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/).
 
 Before applying an upgrade, run the read-only checks:
@@ -97,15 +97,17 @@ just upgrade-check YOUR_INVENTORY v1.33.13
 
 This uses SSH and the existing cluster API but does not drain or modify nodes.
 It checks Kubernetes minor skew, cgroup v2 and the containerd upgrade path.
-Containerd also requires sequential minor upgrades, with a documented exception
-for 1.7 LTS → 2.3 LTS; inspect [its release policy](https://containerd.io/releases/).
+Containerd allows sequential minor upgrades and sequential LTS migrations. The
+preflight accepts 1.7 or 2.0 LTS → 2.3 LTS; review deprecations, back up runtime
+configuration, and inspect [its release policy](https://containerd.io/releases/).
 The latest role's native v4 config requires containerd 2.3; older runtime
 transition steps need a matching config and must be handled separately.
 
 Also inspect the installed CNI, CSI/storage, admission webhooks, PDBs, kernel
 and OS compatibility. Confirm a recoverable etcd snapshot, application-volume
-backups, and a maintenance window. Full upgrade execution requires explicit
-`upgrade_backup_confirmed=true` and `upgrade_maintenance_confirmed=true`.
+backups, and a maintenance window. The former `upgrade_backup_confirmed` and
+`upgrade_maintenance_confirmed` flags only acknowledged these steps; they never
+verified a snapshot or a maintenance window and are no longer required.
 A single control-plane node has API downtime; workloads without another node
 cannot be rescheduled while it is drained. The playbook does not bypass PDBs
 and refuses to discard emptyDir data by default.
@@ -117,21 +119,36 @@ This does not delete PVCs or hostPath directories and does not bypass PDBs.
 On a failed upgrade the node stays cordoned; resolve the failure before retrying.
 
 For an explicitly accepted in-place upgrade, add `-e upgrade_skip_drain=true`.
-This skips only the drain task: runtime, CNI, Kubernetes, readiness checks and
-the final uncordon still run. It does not cordon or evict workloads before the
-upgrade. This departs from the documented drain-based Kubernetes procedure;
+This skips both drain and uncordon, leaving scheduling state unchanged. Runtime,
+CNI, Kubernetes and readiness checks still run. It does not cordon or evict
+workloads. This departs from the documented drain-based Kubernetes procedure;
 runtime and kubelet restarts can still interrupt workloads. Drain remains
-enabled by default. A node cordoned by an earlier attempt remains cordoned until
-the successful upgrade uncordons it; on failure its scheduling state is unchanged
-by this mode.
+enabled by default. If an earlier attempt already cordoned the node, restore its
+scheduling explicitly with `kubectl uncordon NODE` once the API is healthy.
 
-`just validate-kubeadm v1.33.13 v1.34.11 v1.35.8 v1.36.4` validates generated
+After kubelet changes, the playbook checks both the target kubelet version and
+the node's Ready condition, then the API's `/readyz` endpoint. These checks and
+the normal drain-mode uncordon retry transient API failures (30 retries with a
+5-second delay and a 10-second request timeout). A previously reported Ready
+condition alone is insufficient while static control-plane pods restart.
+
+Keep `kubeadm_version: "{{ kubernetes_version }}"` in inventory so each minor step
+only needs one version override. There is no need to pass `containerd_version`
+when the installed runtime already matches the pinned role default. For a
+single-node inventory with accepted in-place upgrades, store
+`upgrade_skip_drain: true` in its group variables rather than repeating the flag.
+
+`just validate-kubeadm v1.33.13 v1.34.11 v1.35.8 v1.36.4 v1.37.0` validates generated
 configuration offline with each actual target binary; it is not a live-cluster
 compatibility certificate.
 
 The former Windows CNI, Kubernetes-hosts and Docker repositories are archived
 and no longer appear in either requirements file.
 
-On macOS, Ansible's URL lookup can trigger an Objective-C fork error.
-For affected commands, prefix with `OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES`,
-as described in the [Ansible FAQ](https://docs.ansible.com/projects/ansible-core/2.18/reference_appendices/faq.html#running-on-macos-as-a-control-node).
+On macOS, Ansible's URL lookup can trigger an Objective-C fork error while Python
+discovers system proxy settings. The repository's `mise.toml` sets `no_proxy=*`
+on macOS, so `mise exec -- ...` and the just recipes avoid that native lookup.
+Other operating systems retain their existing proxy exclusions. This bypasses
+HTTP proxies for commands in this project's mise environment, not TLS certificate
+verification; it does not change global shell settings or the managed node.
+See the [Python urllib warning](https://docs.python.org/3.14/library/urllib.request.html).

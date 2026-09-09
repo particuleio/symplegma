@@ -25,10 +25,14 @@ class UpgradeDrainTests(unittest.TestCase):
             variables = {} if value is None else {"upgrade_skip_drain": value}
             with self.subTest(value=value):
                 templar = Templar(loader=loader, variables=variables)
-                self.assertEqual(templar.evaluate_conditional(tasks[0]["when"]), should_drain)
-        for task in tasks[1:]:
+                for task in (tasks[0], tasks[-1]):
+                    self.assertEqual(templar.evaluate_conditional(task["when"]), should_drain)
+        for task in tasks[1:-1]:
             self.assertNotIn("upgrade_skip_drain", str(task))
-        self.assertEqual(tasks[-2]["name"], "Wait for the upgraded node to become ready")
+        self.assertEqual(tasks[-3]["name"], "Wait for the upgraded node to become ready")
+        self.assertEqual(
+            tasks[-2]["name"], "Wait for the API to be ready after the kubelet restart"
+        )
         self.assertEqual(tasks[-1]["name"], "Uncordon the successfully upgraded node")
 
     def test_emptydir_deletion_requires_explicit_opt_in(self):

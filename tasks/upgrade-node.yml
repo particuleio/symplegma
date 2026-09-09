@@ -77,19 +77,49 @@
     argv:
       - "{{ bin_dir | default('/opt/bin') }}/kubectl"
       - --kubeconfig=/etc/kubernetes/admin.conf
-      - wait
-      - "--for=condition=Ready"
-      - "node/{{ kubeadm_node_name | default(ansible_facts.hostname) }}"
-      - "--timeout={{ upgrade_ready_timeout | default('5m') }}"
+      - --request-timeout=10s
+      - get
+      - node
+      - "{{ kubeadm_node_name | default(ansible_facts.hostname) }}"
+      - --output=json
   delegate_to: "{{ groups['master'] | first }}"
   changed_when: false
+  register: upgrade_node_status
+  until: >-
+    upgrade_node_status.rc == 0 and
+    (upgrade_node_status.stdout | from_json).status.nodeInfo.kubeletVersion == kubernetes_version and
+    ((upgrade_node_status.stdout | from_json).status.conditions |
+     selectattr('type', 'equalto', 'Ready') | map(attribute='status') | first | default('False')) == 'True'
+  retries: 30
+  delay: 5
+
+- name: Wait for the API to be ready after the kubelet restart
+  ansible.builtin.command:
+    argv:
+      - "{{ bin_dir | default('/opt/bin') }}/kubectl"
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - --request-timeout=10s
+      - get
+      - --raw=/readyz
+  delegate_to: "{{ groups['master'] | first }}"
+  changed_when: false
+  register: upgrade_api_ready
+  until: upgrade_api_ready.rc == 0
+  retries: 30
+  delay: 5
 
 - name: Uncordon the successfully upgraded node
   ansible.builtin.command:
     argv:
       - "{{ bin_dir | default('/opt/bin') }}/kubectl"
       - --kubeconfig=/etc/kubernetes/admin.conf
+      - --request-timeout=10s
       - uncordon
       - "{{ kubeadm_node_name | default(ansible_facts.hostname) }}"
   delegate_to: "{{ groups['master'] | first }}"
   changed_when: true
+  register: upgrade_uncordon
+  until: upgrade_uncordon.rc == 0
+  retries: 30
+  delay: 5
+  when: not (upgrade_skip_drain | default(false) | bool)
