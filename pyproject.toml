@@ -4,8 +4,8 @@ version = "3.0.0"
 description = "Ansible tooling for the Symplegma Kubernetes playbooks"
 requires-python = ">=3.12,<3.15"
 dependencies = [
-  "ansible==14.3.1",
-  "ansible-core==2.21.3",
+  "ansible==14.4.0",
+  "ansible-core==2.21.4",
 ]
 
 [dependency-groups]
