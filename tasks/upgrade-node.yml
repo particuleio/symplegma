@@ -11,6 +11,7 @@
       - "--timeout={{ upgrade_drain_timeout | default('10m') }}"
   delegate_to: "{{ groups['master'] | first }}"
   changed_when: true
+  when: not (upgrade_skip_drain | default(false) | bool)
 
 - name: Update containerd
   ansible.builtin.include_role:

@@ -116,6 +116,15 @@ To explicitly accept permanent deletion of their contents, add
 This does not delete PVCs or hostPath directories and does not bypass PDBs.
 On a failed upgrade the node stays cordoned; resolve the failure before retrying.
 
+For an explicitly accepted in-place upgrade, add `-e upgrade_skip_drain=true`.
+This skips only the drain task: runtime, CNI, Kubernetes, readiness checks and
+the final uncordon still run. It does not cordon or evict workloads before the
+upgrade. This departs from the documented drain-based Kubernetes procedure;
+runtime and kubelet restarts can still interrupt workloads. Drain remains
+enabled by default. A node cordoned by an earlier attempt remains cordoned until
+the successful upgrade uncordons it; on failure its scheduling state is unchanged
+by this mode.
+
 `just validate-kubeadm v1.33.13 v1.34.11 v1.35.8 v1.36.4` validates generated
 configuration offline with each actual target binary; it is not a live-cluster
 compatibility certificate.

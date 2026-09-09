@@ -10,6 +10,27 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class UpgradeDrainTests(unittest.TestCase):
+    def test_skip_drain_requires_explicit_opt_in(self):
+        loader = DataLoader()
+        tasks = loader.load_from_file(
+            str(ROOT / "tasks/upgrade-node.yml"), trusted_as_template=True
+        )
+        for value, should_drain in (
+            (None, True),
+            (False, True),
+            ("false", True),
+            (True, False),
+            ("true", False),
+        ):
+            variables = {} if value is None else {"upgrade_skip_drain": value}
+            with self.subTest(value=value):
+                templar = Templar(loader=loader, variables=variables)
+                self.assertEqual(templar.evaluate_conditional(tasks[0]["when"]), should_drain)
+        for task in tasks[1:]:
+            self.assertNotIn("upgrade_skip_drain", str(task))
+        self.assertEqual(tasks[-2]["name"], "Wait for the upgraded node to become ready")
+        self.assertEqual(tasks[-1]["name"], "Uncordon the successfully upgraded node")
+
     def test_emptydir_deletion_requires_explicit_opt_in(self):
         loader = DataLoader()
         tasks = loader.load_from_file(

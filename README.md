@@ -65,7 +65,10 @@ and ansible-core **2.21.3**. See [the release inventory](https://particuleio.git
 Existing clusters must follow Kubernetes' sequential minor upgrade policy.
 `symplegma-upgrade.yml` drains each node, upgrades control planes before worker
 kubelets, waits for readiness, then uncordons. A failed upgrade leaves the node
-cordoned. This is not a direct upgrade path from the former 1.24 defaults.
+cordoned. An explicit `-e upgrade_skip_drain=true` skips eviction for an accepted
+in-place upgrade, without guaranteeing workload availability; readiness checks
+and the final uncordon still run. This is not a direct upgrade path from the
+former 1.24 defaults.
 
 ## Documentation
 
