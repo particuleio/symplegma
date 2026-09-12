@@ -32,4 +32,4 @@ jobs:
           node-version: '24'
       - name: Validate Renovate configuration
         # renovate: datasource=npm depName=renovate
-        run: npx --yes --package=renovate@44.69.9 renovate-config-validator --strict .github/renovate.json
+        run: npx --yes --package=renovate@44.82.4 renovate-config-validator --strict .github/renovate.json
