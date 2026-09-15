@@ -18,7 +18,7 @@ dev = [
 docs = [
   "mkdocs==1.6.1",
   "mkdocs-material==9.7.7",
-  "pymdown-extensions==11.0.2",
+  "pymdown-extensions==12.0",
   "Pygments==2.21.0",
   "markdown-include==0.8.1",
 ]
