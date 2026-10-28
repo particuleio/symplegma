@@ -17,7 +17,7 @@ concurrency:
 jobs:
   validate:
     name: Ansible / Python ${{ matrix.python }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 15
     strategy:
       fail-fast: false
@@ -65,7 +65,7 @@ jobs:
 
   pre-commit:
     name: Pre-commit checks
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 15
     steps:
       - name: Check out the repository
